@@ -84,6 +84,7 @@ def log():
         account = cur.fetchone()
 
         if account:
+            time.sleep(1)
             session['logueado'] = True
             session['email'] = account[5]
             session['rol'] = account[8]
