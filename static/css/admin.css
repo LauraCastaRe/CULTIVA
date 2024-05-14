@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    background-color: #333; /* Color de fondo de la barra de navegación */
+    padding: 10px 0; /* Espaciado interno en la barra de navegación */
+}
+.container {
+    width: 90%; /* Ancho del contenedor principal */
+    margin: auto; /* Centrar el contenedor en la pantalla */
+}
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between; /* Distribuir los elementos horizontalmente */
+    align-items: center;
+}
+.nav-links li {
+    margin-right: 20px; /* Espaciado entre elementos de la barra de navegación */
+}
+.nav-links li a {
+    color: #fff; /* Color del texto de los enlaces */
+    text-decoration: none; /* Quitar subrayado de los enlaces */
+}

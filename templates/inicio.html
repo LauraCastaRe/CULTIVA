@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="static/css/inicio.css">
+    
+</head>
+<body>
+    <nav class="navbar sticky-top">
+        <div class="container">
+            <a href="#" class="logo"><span class="li">Cultiva</span>Red</a>
+            <ul class="nav-links">
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#about">Sobre nosotros</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inicia</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/IniciaSesion">Inicia Sesion</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/Registrate">Registrate</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="services" >
+        <h2>Nuestros Servicios</h2>
+        <p>
+            <strong>Servicios innovadores para el campo colombiano: Acercando a campesinos y consumidores a través de la tecnología.</strong>
+        </p>
+        <p>
+            En el corazón de la sabana de Bogotá, nace una iniciativa que busca transformar la vida de los campesinos y dinamizar la economía rural: una aplicación web diseñada para facilitar la compra y venta de productos agrícolas. Esta plataforma digital pone a disposición de los productores un espacio directo para conectar con los consumidores, eliminando intermediarios y optimizando los procesos de comercialización.
+        </p>
+
+        <ul>
+            
+            
+            <div class="service-card" >
+                <div class="card">
+                    <div class="img">
+                        <img src="static/img/4.jpg">
+                    </div>
+                    <p>
+                        Registro gratuito para campesinos: Los productores agrícolas de la sabana de Bogotá pueden crear cuentas sin costo alguno para acceder a los beneficios de la plataforma.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card">
+                    <div class="img">
+                        <img src="static/img/5.jpeg">
+                    </div>
+                    <p>
+                        Publicación sencilla de cosechas: La aplicación ofrece una interfaz amigable para que los campesinos publiquen sus productos de manera rápida y sencilla.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card">
+                    <div class="img">
+                        <img src="static/img/7.jpg">
+                    </div>
+                    <p>
+                        Búsqueda y compra eficiente: Los consumidores pueden encontrar los productos que buscan utilizando filtros de ubicación, tipo de producto y precio. La plataforma facilita la compra directa a los campesinos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="card">
+                    <div class="img">
+                        <img src="static/img/6.jpg">
+                    </div>
+                    <p>
+                        Comunicación directa: Un sistema de mensajería interno permite a compradores y campesinos comunicarse para negociar detalles, acordar términos de entrega y concretar la compra.
+                    </p>
+                </div>
+            </div>
+
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>Sobre nosotros</h2>
+        <p>
+            <strong>Nosotros: Un equipo apasionado por el campo colombiano</strong>
+        </p>
+        <p>Somos un equipo de profesionales apasionados por el desarrollo sostenible y la transformación del sector agrícola en Colombia. Creemos en el potencial del campo colombiano para ser un motor de progreso y bienestar para las comunidades rurales.</p>
+        
+        <ul>
+            <div class="about-card" >
+                <div class="card">
+                    <img src="static/img/8.jpg">
+                    <h2>Misión</h2>
+                    <p>
+                        Desarrollar soluciones innovadoras que empoderen a los campesinos colombianos, mejoren sus condiciones de vida y contribuyan al desarrollo sostenible del sector agrícola.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <div class="card">
+                    <img src="static/img/9.jpg">
+                    <h2>Visión</h2>
+                    <p>
+                        Ser la referencia en innovación y tecnología para el campo colombiano, liderando la transformación del sector y promoviendo el bienestar de las comunidades rurales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <div class="card">
+                    <img src="static/img/10.jpg">
+                    <h2>Equipo</h2>
+                    <p>
+                        Nuestro equipo está conformado por profesionales con experiencia en diversos campos, incluyendo la agricultura, la tecnología, el desarrollo rural y la innovación social. Estamos unidos por nuestra pasión por el campo colombiano y nuestro compromiso con el desarrollo sostenible.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <div class="card">
+                    <img src="static/img/11.jpg">
+                    <h2>Futuro</h2>
+                    <p>
+                        Estamos comprometidos con continuar trabajando por el desarrollo sostenible del campo colombiano. Estamos desarrollando nuevas soluciones innovadoras para los desafíos del sector agrícola, y estamos buscando nuevas formas de apoyar a las comunidades rurales.
+                    </p>
+                </div>
+            </div>
+
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contacto</h2>
+        <p>¿Tienes preguntas, sugerencias o comentarios sobre nuestro proyecto? ¿Te interesa formar parte de nuestro equipo o colaborar con nosotros? No dudes en contactarnos.</p>
+        <form>
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <label for="message">Mensaje:</label>
+            <textarea id="message" name="message"></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+
+
+    <footer class="pie-pagina">
+        <div class="g1">
+            <small>&copy; 2024 <b>LA</b> - Todos los derechos reservados. </small>
+        </div>
+    </footer>
+</body>
+</html>
+
+{% endblock %}

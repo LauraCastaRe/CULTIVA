@@ -1,0 +1,46 @@
+{% extends 'administrador/baseAdmin.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/listasProductos">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Vendedor</th>
+                                <th scope="col">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in produ %}
+                                <tr>
+                                    <td>{{ producto.0 }}</td>
+                                    <td>{{ producto.1 }}</td>
+                                    <td>{{ producto.2 }}</td>
+                                    <td>{{ producto.3 }}</td>
+                                    <td>{{ producto.4 }}</td>
+                                    <td>{{ producto.5 }}</td>
+                                    <td>
+                                        <a href="/editarProductoAdmin/{{ producto.0 }}" class="btn btn-primary btn-sm">Editar</a>
+                                        <a href="/eliminarProductoAdmin/{{producto.0}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')">Eliminar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="/Administrador">Atras</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

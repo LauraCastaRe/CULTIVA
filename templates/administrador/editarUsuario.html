@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/editar.css')}}">
+{% endblock %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Regístrate</h3>
+
+            <form action="/update/{{user.0}}" method="POST">
+
+              <!-- Datos personales -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="identificacion">Identificación</label>
+                  <input type="int" name="identificacion" class="form-control" value="{{user.0}}" readonly>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" name="nombre" class="form-control" value="{{user.1}}" placeholder="Nombre">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="apellido">Apellido</label>
+                  <input type="text" name="apellido" class="form-control" value="{{user.2}}" placeholder="Apellido">
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label>Genero</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="genero" value="Mujer" {% if user.3 == 'Mujer' %} checked {% endif %}>
+                    <label class="form-check-label">Mujer</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="genero" value="Hombre" {% if user.3 == 'Hombre' %} checked {% endif %}>
+                    <label class="form-check-label">Hombre</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contacto -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="email">Email</label>
+                  <input type="text" name="email" class="form-control" value="{{user.5}}" placeholder="Correo Electrónico">
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="telefono">Teléfono</label>
+                  <input type="int" name="telefono" class="form-control" value="{{user.4}}" placeholder="Celular">
+                </div>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="contrasena1">Contraseña</label>
+                  <input type="password" name="contrasena1" class="form-control" value="{{user.6}}" placeholder="Contraseña">
+                </div>
+              </div>
+
+              <!-- Rol -->
+              <div class="row">
+                <div class="col-12 mb-4">
+                  <label>Rol</label>
+                  <select name="rol" class="form-select">
+                    <option value="Comprador" {% if user.8 == 'Comprador' %} selected {% endif %}>Comprador</option>
+                    <option value="Vendedor" {% if user.8 == 'Vendedor' %} selected {% endif %}>Vendedor</option>
+                    <option value="Admin" {% if user.8 == 'Admin' %} selected {% endif %}>Admnistrador</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-2">
+                <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('¿Estás seguro de que deseas editar este usuario?')">Actualizar</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

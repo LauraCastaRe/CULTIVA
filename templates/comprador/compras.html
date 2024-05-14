@@ -1,0 +1,38 @@
+{% extends 'comprador/baseComprador.html' %}
+
+{% block body %}
+    
+</head>
+<body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <div class="container">
+        <h1 class="my-4">Lista de Productos</h1>
+        <div class="row">
+            {% for producto in produ %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="{{ producto.imagen }}" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ producto.1 }}</h4>
+                        <p class="card-text">Vendedor: {{ producto.5 }}</p>
+                        <p class="card-text">{{ producto.2 }}</p>
+                        <h5>Precio: ${{ producto.4 }}</h5>
+                        <form action="/agregar_al_carrito" method="POST">
+                            <input type="hidden" name="id_producto" value="{{ producto.0 }}">
+                            <input type="hidden" name="nombre_producto" value="{{ producto.1 }}">
+                            <input type="hidden" name="precio_producto" value="{{ producto.4 }}">
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad</label>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+</body>
+{% endblock %}

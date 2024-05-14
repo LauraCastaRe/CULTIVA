@@ -1,0 +1,51 @@
+{% extends 'administrador/baseAdmin.html' %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/crud">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Género</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Contraseña</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in data %}
+                                <tr>
+                                    <td>{{ usuario.0 }}</td>
+                                    <td>{{ usuario.1 }}</td>
+                                    <td>{{ usuario.2 }}</td>
+                                    <td>{{ usuario.3 }}</td>
+                                    <td>{{ usuario.4 }}</td>
+                                    <td>{{ usuario.5 }}</td>
+                                    <td>{{ usuario.6 }}</td>
+                                    <td>{{ usuario.8 }}</td>
+                                    <td>
+                                        <a href="/editar/{{ usuario.0 }}" class="btn btn-primary btn-sm">Editar</a>
+                                        <a href="/eliminar/{{usuario.0}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="/Administrador">Atras</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

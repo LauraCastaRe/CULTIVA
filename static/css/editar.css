@@ -1,0 +1,46 @@
+/* Custom CSS for form validation */
+.form-control:focus,
+.valid-feedback,
+.invalid-feedback {
+    font-size: 0.9rem;
+}
+
+.form-control:not(:focus):not(:disabled):not([readonly]) {
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.valid-feedback {
+    display: none;
+    font-size: 0.8rem;
+    color: #28a745;
+}
+
+.invalid-feedback {
+    display: none;
+    font-size: 0.8rem;
+    color: #dc3545;
+}
+
+.was-validated .form-control:valid,
+.form-control.is-valid {
+    border-color: #28a745;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+/* Custom CSS for checkbox */
+.form-check-input.is-valid + .form-check-label::before {
+    border-color: #28a745;
+}
+
+.form-check-input.is-invalid + .form-check-label::before {
+    border-color: #dc3545;
+}

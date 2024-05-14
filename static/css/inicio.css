@@ -1,0 +1,173 @@
+/* Estilos para el body */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 500%;
+    animation: fanimado 10s infinite;
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #615D62;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6AD2D3;
+}
+
+.navbar .li {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-right: 0px;
+}
+
+.navbar .nav-links:hover {
+    color: #6AD2D3;
+}
+
+.navbar .nav-links li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbar .dropdown-menu {
+    background-color: #615D62;
+}
+
+/* Estilos para las secciones */
+section {
+    text-align: center;
+    padding: 80px 20px; /* Ajustar según sea necesario */
+}
+
+section h2 {
+    font-size: 40px;
+    color: #6AD2D3;
+    margin-bottom: 20px;
+}
+
+section p {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Estilos para las tarjetas de servicios y sobre nosotros */
+.service-card,
+.about-card {
+    width: 300px;
+    height: 420px; /* Ajustar según sea necesario */
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+.service-card:hover,
+.about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.service-card img,
+.about-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.service-card p,
+.about-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el formulario de contacto */
+section#contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+section#contact form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+section#contact form input[type="text"],
+section#contact form input[type="email"],
+section#contact form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+section#contact form button[type="submit"] {
+    background-color: #118889;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+section#contact form button[type="submit"]:hover {
+    background-color: #0b6b6a;
+}
+
+/* Estilos para el pie de página */
+footer.pie-pagina {
+    background-color: #615D62;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+    

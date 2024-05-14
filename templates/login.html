@@ -1,0 +1,39 @@
+{% extends './base.html' %}
+
+{% with mensaje = get_flashed_messages() %}
+
+<ul class="flash-messages">
+  {% for mensaje in messages %}
+  <li>{{ mensaje }}</li>
+  {% endfor %}
+</ul>
+
+{% endwith %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+
+{% endblock %}
+
+{% block body %}
+
+<body>
+
+  <div class="login-page">
+    <div class="login-box">
+      <h1>Bienvenido</h1>
+      <form action="/login" method="POST">
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="contrasena1" placeholder="Contraseña" required>
+        <button type="submit" id="log">Login</button>
+      </form>
+      <a href="/Registrate" class="sign-up">¿No tienes una cuenta? Registrate!</a>
+      <div class="img">
+        <img src="static/img/12.jpg">
+      </div>
+    </div>
+  </div>
+  <script src="static/js/msj.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+{% endblock %}
