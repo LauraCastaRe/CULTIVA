@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block tittle %}{% endblock %}</title>
-    
+    <title>CULTIVARED</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    
+    <link rel="icon" href="static/img/logoo.png">
+    <link rel="stylesheet" href="static/css/inicio.css">
     {% block customCSS %}
     {% endblock %}
 </head>
 <body>
-    <link rel="stylesheet" href="static/css/inicio.css">
     <nav class="navbar sticky-top">
         <div class="container">
             <a href="#" class="logo"><span class="li">Cultiva</span>Red</a>
             <ul class="nav-links">
-                <li><a href="/listaProducto">Tu productos</a></li>
-                <li><a href="/RegistraProductos">Registra Productos</a></li>
+                <li><a href="/listaProducto" title="Mis productos">Mis productos</a></li>
+                <li><a href="/RegistraProductos" title="Registra Productos">Registra Productos</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">{{user[1]}}</a>
+                        aria-haspopup="true" aria-expanded="false" title="{{user[1]}}">{{user[1]}}</a>
                     <div class="dropdown-menu">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logout">Cierra Sesion</a>
+                        <a class="dropdown-item" href="/logout" title="Mi perfil">Mi perfil</a>
+                        <a class="dropdown-item" href="/logout" title="Cierra Sesión">Cierra Sesion</a>
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> 
     </nav>
 
     {% block body %}

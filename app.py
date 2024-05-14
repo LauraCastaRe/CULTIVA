@@ -84,7 +84,7 @@ def log():
         account = cur.fetchone()
 
         if account:
-            time.sleep(1)
+            
             session['logueado'] = True
             session['email'] = account[5]
             session['rol'] = account[8]
@@ -97,7 +97,7 @@ def log():
             elif session['rol'] == 'Comprador':
                 return redirect(url_for('comprador'))
         else:
-            time.sleep(2)
+            time.sleep(1)
             return render_template("login.html")
 
     return render_template("login.html")
