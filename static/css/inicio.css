@@ -6,7 +6,6 @@ body {
     width: 100%;
     height: 100%;
     background-size: 500%;
-    animation: fanimado 10s infinite;
 }
 
 @keyframes fanimado {
@@ -61,6 +60,7 @@ body {
 .navbar .nav-links li {
     display: inline-block;
     margin-right: 20px;
+    color: #e60000;
 }
 
 .navbar .nav-links a {
@@ -68,14 +68,25 @@ body {
     color: #fff;
 }
 
+.navbar .nav-links a:hover{
+    text-decoration: none;
+    color: #e60000;
+}
+
 .navbar .dropdown-menu {
     background-color: #ffcc00; /* Amarillo */
+}
+
+.navbar .dropdown-menu a:hover{
+    color: #e60000;
 }
 
 /* Estilos para las secciones */
 section {
     text-align: center;
     padding: 80px 20px; /* Ajustar según sea necesario */
+    width: 100%;
+    height: 100vh;
 }
 
 section h2 {
@@ -99,10 +110,9 @@ section ul {
 }
 
 /* Estilos para las tarjetas de servicios y sobre nosotros */
-.service-card,
-.about-card {
+.service-card{
     width: 300px;
-    height: 420px; /* Ajustar según sea necesario */
+    height: 400px; /* Ajustar según sea necesario */
     margin: 20px;
     padding: 20px;
     border: 1px solid #ccc;
@@ -112,13 +122,52 @@ section ul {
     text-align: center;
 }
 
-.service-card:hover,
+.service-card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.service-card .card{
+    border: none;
+}
+
+.service-card img{
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.service-card p{
+    align-content: center;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Estilos para las tarjetas de servicios y sobre nosotros */
+
+.about-card {
+    width: 300px;
+    height: 550px; /* Ajustar según sea necesario */
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
 .about-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.service-card img,
+.about-card .card{
+    border: none;
+}
+
 .about-card img {
     width: 100%;
     height: auto;
@@ -126,14 +175,19 @@ section ul {
     margin-bottom: 20px;
 }
 
-.service-card p,
 .about-card p {
+    align-content: center;
     font-size: 16px;
     color: #555;
     margin-bottom: 20px;
 }
 
+
 /* Estilos para el formulario de contacto */
+section#contact{
+    max-height: 800px;
+}
+
 section#contact form {
     max-width: 600px;
     margin: 0 auto;

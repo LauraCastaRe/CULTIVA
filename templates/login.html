@@ -16,15 +16,15 @@
 {% block body %}
   <div class="login-page">
     <div class="login-box">
-      <h1>Bienvenido</h1>
+      <h1 title="Bienvenido">¡Bienvenido!</h1>
       <form action="/login" method="POST">
-        <input type="text" name="email" placeholder="Email" required>
-        <input type="password" name="contrasena1" placeholder="Contraseña" required>
+        <input type="text" name="email" placeholder="Email" required title="Campo de email">
+        <input type="password" name="contrasena1" placeholder="Contraseña" required title="Campo de contraseña">
         <button type="submit" id="log" title="Iniciar Sesión">Iniciar Sesión</button>
       </form>
       <a href="/Registrate" class="sign-up" title="¿No tienes una cuenta? Registrate!">¿No tienes una cuenta? Registrate!</a>
       <div class="img">
-        <img src="static/img/logoo.png">
+        <img src="static/img/logoo.png" title="Logo de CultivaRed">
       </div>
     </div>
   </div>
