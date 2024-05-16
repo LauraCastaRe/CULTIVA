@@ -1,7 +1,8 @@
 import time
-from flask import Flask, render_template, request,redirect, url_for,flash,session
+from flask import Flask, render_template, request,redirect, url_for,flash,session,jsonify
 from flask_mysqldb import MySQL
 import re
+from datetime import datetime
 
 #conexion base de datos
 app = Flask(__name__)
@@ -10,8 +11,6 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'registrosCULTIVARED'
 mysql = MySQL(app)
-
-#configuraciones
 app.secret_key='mysecretkey' 
 
 #pagina inicial
@@ -113,28 +112,48 @@ def logout():
 @app.route('/Administrador')
 def admin():
     if 'logueado' in session and session['logueado']:
-        
-        # Obtener solo los datos del usuario actual
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
         user = cur.fetchone()
         cur.close()
-
-        # Renderizar la plantilla con los datos del usuario
         return render_template('administrador/administrador.html', user=user)
-    
     else:
-        # Redirigir si el usuario no está logueado
-        return redirect(url_for('log'))
+        alerta = """
+        <script>
+        alert("Por favor, primero inicie sesión.");
+        window.location.href = "/login";
+        </script>
+        """
+        return alerta
 
 #crud usuarios
 @app.route('/crud')
 def crudUsuario():
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM usuarios')
-    data = cur.fetchall()
-    user = cur.fetchone()
-    return render_template('/administrador/crud_admin.html', data=data, user=user)
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM usuarios')
+                data = cur.fetchall()
+                user = cur.fetchone()
+                return render_template('/administrador/crud_admin.html', data=data, user=user)
+            else:
+                alerta = """
+                <script>
+                alert("No tienes permisos.");
+                window.location.href = "/";
+                </script>
+                """
+                return alerta
+    else:
+        alerta = """
+        <script>
+        alert("Por favor, primero inicie sesión.");
+        window.location.href = "/login";
+        </script>
+        """
+        return alerta
 
 #metodo eliminar del crud adminitrador
 @app.route('/eliminar/<int:id>')
@@ -367,36 +386,52 @@ def compras():
 
 @app.route('/agregar_al_carrito', methods=['POST'])
 def agregar_al_carrito():
-    if 'carrito' not in session:
-        session['carrito'] = []
+    try:
+        data = request.form
+        producto_id = data['id_producto']
+        nombre_producto = data['nombre_producto']
+        precio_producto = data['precio_producto']
+        cantidad = int(data['cantidad'])
 
-    id_producto = int(request.form['id_producto'])
-    nombre_producto = request.form['nombre_producto']
-    precio_producto = float(request.form['precio_producto'])
-    cantidad = int(request.form['cantidad'])
+        cursor = mysql.connection.cursor()
+        cursor.execute("INSERT INTO carrito (producto_id, nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s, %s)", (producto_id, nombre_producto, precio_producto, cantidad))
+        mysql.connection.commit()
 
-    producto_en_carrito = {
-        'id': id_producto,
-        'nombre': nombre_producto,
-        'precio': precio_producto,
-        'cantidad': cantidad
-    }
-
-    session['carrito'].append(producto_en_carrito)
-
-    return redirect('/carrito')
+        return jsonify({"message": "Producto añadido al carrito correctamente"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/carrito')
-def carrito_compras():
-    if 'logueado' in session and session['logueado']:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        carrito = session.get('carrito', [])
-        return render_template('comprador/carrito.html', carrito=carrito, user=user)
-    else:
-        return redirect(url_for('log'))
-    
+def ver_carrito():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM carrito")
+    productos_carrito = cursor.fetchall()
+    cursor.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+    user = cursor.fetchone()
+    total = sum([producto[3] * producto[4] for producto in productos_carrito])  # Calcula el total
+    return render_template('comprador/carrito.html', productos_carrito=productos_carrito, total=total,user=user)
+
+@app.route('/pagar', methods=['POST'])
+def pagar():
+    try:
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT SUM(precio_producto * cantidad) FROM carrito")
+        total = cursor.fetchone()[0]
+        user = session.get('email')
+
+        cursor.execute("INSERT INTO transacciones (fechaVenta, total, idComprador) VALUES (%s, %s, %s)",
+                        (datetime.now(), total, user))
+        mysql.connection.commit()
+
+        cursor.execute("DELETE FROM carrito")
+        mysql.connection.commit()
+
+        return jsonify({"message": "Pago procesado correctamente. Carrito vaciado."}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

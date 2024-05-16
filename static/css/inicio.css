@@ -5,24 +5,12 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background-size: 500%;
-}
-
-@keyframes fanimado {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    background-color: #ffffff; /* Fondo blanco */
 }
 
 /* Estilos para la barra de navegación */
 .navbar {
-    background-color: #ffcc00; /* Amarillo */
+    background-color: #B22222; /* Rojo oscuro */
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -37,67 +25,61 @@ body {
 .navbar .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #e60000; /* Rojo */
+    color: #FFD700; /* Amarillo dorado */
 }
 
 .navbar .li {
     font-size: 24px;
     font-weight: bold;
-    color: #fff;
+    color: #fff; /* Blanco */
 }
 
 .navbar .nav-links {
     list-style: none;
     margin: 0;
     padding: 0;
-    margin-right: 0px;
-}
-
-.navbar .nav-links:hover {
-    color: #e60000; /* Rojo */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .navbar .nav-links li {
-    display: inline-block;
     margin-right: 20px;
-    color: #e60000;
 }
 
 .navbar .nav-links a {
     text-decoration: none;
-    color: #fff;
+    color: #fff; /* Blanco */
 }
 
-.navbar .nav-links a:hover{
-    text-decoration: none;
-    color: #e60000;
+.navbar .nav-links a:hover {
+    color: #FF8C00; /* Naranja */
 }
 
 .navbar .dropdown-menu {
-    background-color: #ffcc00; /* Amarillo */
+    background-color: #B22222; /* Rojo oscuro */
 }
 
-.navbar .dropdown-menu a:hover{
-    color: #e60000;
+.navbar .dropdown-menu a:hover {
+    color: #FF8C00; /* Naranja */
 }
 
 /* Estilos para las secciones */
 section {
     text-align: center;
-    padding: 80px 20px; /* Ajustar según sea necesario */
+    padding: 80px 20px;
     width: 100%;
-    height: 100vh;
+    box-sizing: border-box;
 }
 
 section h2 {
     font-size: 40px;
-    color: #e60000; /* Rojo */
+    color: #FF8C00; /* Naranja */
     margin-bottom: 20px;
 }
 
 section p {
     font-size: 16px;
-    color: #333;
+    color: #333333; /* Gris oscuro */
     margin-top: 20px;
 }
 
@@ -110,88 +92,52 @@ section ul {
 }
 
 /* Estilos para las tarjetas de servicios y sobre nosotros */
-.service-card{
+.service-card, .about-card {
     width: 300px;
-    height: 400px; /* Ajustar según sea necesario */
     margin: 20px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #fff; /* Blanco */
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover{
+.service-card:hover, .about-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.service-card .card{
-    border: none;
-}
-
-.service-card img{
+.service-card img, .about-card img {
     width: 100%;
     height: auto;
     border-radius: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card p{
-    align-content: center;
+.service-card img:hover, .about-card img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.service-card p, .about-card p {
     font-size: 16px;
-    color: #555;
+    color: #555555; /* Gris medio */
     margin-bottom: 20px;
 }
-
-/* Estilos para las tarjetas de servicios y sobre nosotros */
-
-.about-card {
-    width: 300px;
-    height: 550px; /* Ajustar según sea necesario */
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    text-align: center;
-}
-
-.about-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.about-card .card{
-    border: none;
-}
-
-.about-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    margin-bottom: 20px;
-}
-
-.about-card p {
-    align-content: center;
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
 
 /* Estilos para el formulario de contacto */
-section#contact{
-    max-height: 800px;
+section#contact {
+    padding-bottom: 40px;
 }
 
 section#contact form {
     max-width: 600px;
     margin: 0 auto;
-    background-color: #ffcc00; /* Amarillo */
+    background-color: #FF8C00; /* Naranja */
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -201,6 +147,7 @@ section#contact form label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    color: #fff; /* Blanco */
 }
 
 section#contact form input[type="text"],
@@ -215,8 +162,8 @@ section#contact form textarea {
 }
 
 section#contact form button[type="submit"] {
-    background-color: #e60000; /* Rojo */
-    color: #fff;
+    background-color: #B22222; /* Rojo oscuro */
+    color: #fff; /* Blanco */
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -226,13 +173,53 @@ section#contact form button[type="submit"] {
 }
 
 section#contact form button[type="submit"]:hover {
-    background-color: #990000; /* Rojo más oscuro al hacer hover */
+    background-color: #8B0000; /* Rojo más oscuro al hacer hover */
 }
 
 /* Estilos para el pie de página */
 footer.pie-pagina {
-    background-color: #ffcc00; /* Amarillo */
+    background-color: #B22222; /* Rojo oscuro */
     padding: 15px 10px;
     text-align: center;
-    color: #fff;
+    color: #fff; /* Blanco */
+}
+
+/* Media queries para diseño responsivo */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar .nav-links li {
+        margin: 10px 0;
+    }
+
+    .service-card, .about-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    section h2 {
+        font-size: 28px;
+    }
+
+    .service-card, .about-card {
+        padding: 15px;
+    }
+
+    section {
+        padding: 40px 10px;
+    }
+
+    .navbar .nav-links {
+        align-items: center;
+    }
 }

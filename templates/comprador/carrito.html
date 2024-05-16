@@ -1,35 +1,34 @@
 {% extends 'comprador/baseComprador.html' %}
 
 {% block body %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Carrito de Compras</h1>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <div class="container">
+        <h1 class="my-4">Carrito de Compras</h1>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Total</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
-                {% for producto in carrito %}
+                {% for producto in productos_carrito %}
                 <tr>
-                    <td>{{ producto.1 }}</td>
-                    <td>{{ producto.4 }}</td>
-                    <td>{{ producto.5 }}</td>
-                    <td>{{ producto.4 * producto.3 }}</td>
+                    <td>{{ producto[2] }}</td>
+                    <td>${{ producto[3] }}</td>
+                    <td>{{ producto[4] }}</td>
+                    <td>${{ producto[3] * producto[4] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="/" class="btn btn-primary">Seguir Comprando</a>
-        <a href="/checkout" class="btn btn-success">Pagar</a>
+        <h3>Total: ${{ total }}</h3>
+        <form action="/pagar" method="POST">
+            <button type="submit" class="btn btn-success">Pagar</button>
+        </form>
     </div>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 {% endblock %}
