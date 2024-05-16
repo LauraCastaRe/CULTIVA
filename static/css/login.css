@@ -1,5 +1,6 @@
 body {
   font-family: Arial, sans-serif;
+<<<<<<< Updated upstream
   margin:0;
   padding: 0;
   display: flex;
@@ -8,6 +9,9 @@ body {
   height: 100vh;
   background: url(/static/img/Back.jpg) center;
   background-size: cover;
+=======
+  animation: fanimado 10s infinite;
+>>>>>>> Stashed changes
 }
 
 .login-page {
@@ -81,3 +85,4 @@ button:hover {
   text-decoration: none;
   color: #b34700; /* Rojo oscuro */
 }
+

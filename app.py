@@ -112,18 +112,23 @@ def logout():
 @app.route('/Administrador')
 def admin():
     if 'logueado' in session and session['logueado']:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        cur.close()
-        return render_template('administrador/administrador.html', user=user)
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                cur.close()
+                return render_template('administrador/administrador.html', user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta 
     else:
-        alerta = """
-        <script>
-        alert("Por favor, primero inicie sesión.");
-        window.location.href = "/login";
-        </script>
-        """
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script>"""
         return alerta
 
 #crud usuarios
@@ -139,37 +144,59 @@ def crudUsuario():
                 user = cur.fetchone()
                 return render_template('/administrador/crud_admin.html', data=data, user=user)
             else:
-                alerta = """
-                <script>
-                alert("No tienes permisos.");
-                window.location.href = "/";
-                </script>
-                """
-                return alerta
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta 
     else:
-        alerta = """
-        <script>
-        alert("Por favor, primero inicie sesión.");
-        window.location.href = "/login";
-        </script>
-        """
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
 
 #metodo eliminar del crud adminitrador
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM usuarios WHERE id = %s", (id,))
-    mysql.connection.commit()
-    return redirect(url_for('crudUsuario'))
-
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute("DELETE FROM usuarios WHERE id = %s", (id,))
+                mysql.connection.commit()
+                return redirect(url_for('crudUsuario'))
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+    
 #pagina de formulaario para editar
 @app.route('/editar/<id>')
 def editar(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM usuarios WHERE ID = %s", (id,))
-    data = cur.fetchall()
-    return render_template('/administrador/editarUsuario.html',user=data[0])
+        if 'logueado' in session and session['logueado']:
+            if 'rol' in session:
+                rol=session['rol']
+                if rol=='Admin':
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM usuarios WHERE ID = %s", (id,))
+                    data = cur.fetchall()
+                    return render_template('/administrador/editarUsuario.html',user=data[0])
+                else:
+                    if rol=='Comprador':
+                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                        return alerta
+                    elif rol=='Vendedor':
+                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                        return alerta 
+        else:
+            alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+            return alerta
 
 #metodo para actualizar en el crud
 @app.route('/update/<int:id>', methods=['POST'])
@@ -204,90 +231,143 @@ def update(id):
 
 #crud productos
 @app.route("/Productos")
-def adminProductos():
+def Productos():
     if 'logueado' in session and session['logueado']:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM productos')
-        data = cur.fetchall()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        return render_template("administrador/productos.html", produ=data,user=user)
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM productos')
+                data = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("administrador/productos.html", produ=data,user=user)
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    Usuario = session['email']
+                    cur = mysql.connection.cursor()
+                    cur.execute('SELECT * FROM productos WHERE idVendedor = %s', (Usuario,))
+                    data = cur.fetchall()
+                    cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                    user = cur.fetchone()
+                    return render_template('/vendedor/crud_producto.html', produ=data,user=user)
     else:
-        flash('Debes iniciar sesión para acceder a esta página.')
-        return redirect(url_for('log'))
-     
-@app.route('/listasProductos')
-def listasProductos():
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+         
+@app.route('/eliminarProducto/<int:id>')
+def eliminarProdu(id):
     if 'logueado' in session and session['logueado']:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM productos')
-        data = cur.fetchall()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        return render_template('/administrador/productos.html', produ=data,user=user)
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute("DELETE FROM productos WHERE idProducto = %s", (id,))
+                mysql.connection.commit()
+                flash('Producto eliminado correctamente')
+                return redirect(url_for('Productos'))
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    cur = mysql.connection.cursor()
+                    cur.execute("DELETE FROM productos WHERE idProducto = %s", (id,))
+                    mysql.connection.commit()
+                    return redirect(url_for('Productos'))
     else:
-        flash('Debes iniciar sesión para acceder a esta página.')
-        return redirect(url_for('log'))
-    
-@app.route('/eliminarProductoAdmin/<int:id>')
-def eliminarProduAdmin(id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM productos WHERE idProducto = %s", (id,))
-    mysql.connection.commit()
-    flash('Producto eliminado correctamente')
-    return redirect(url_for('adminProductos'))
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
-@app.route('/editarProductoAdmin/<id>')
-def editarProduAdmin(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM productos WHERE idProducto = %s", (id,))
-    data = cur.fetchall()
-    return render_template('/administrador/productoEditar.html',produ=data[0])
+@app.route('/editarProducto/<id>')
+def editarProdu(id):
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM productos WHERE idProducto = %s", (id,))
+                data = cur.fetchall()
+                return render_template('/administrador/productoEditar.html',produ=data[0])
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    cur = mysql.connection.cursor()
+                    cur.execute("SELECT * FROM productos WHERE idProducto = %s", (id,))
+                    data = cur.fetchall()
+                    return render_template('/vendedor/editarProducto.html',produ=data[0])
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 #metodo para actualizar en el crud
-@app.route('/updateProductoAdmin/<id>', methods=['GET','POST'])
-def updateProduAdmin(id):
+@app.route('/updateProducto/<id>', methods=['GET','POST'])
+def updateProdu(id):
     if request.method == 'POST':
         idProducto = request.form['idProducto']
         nombreProducto = request.form['nombreProducto']
         descProducto = request.form['descripcion']
         cantidadProducto = request.form['unidades']
         precioProducto = request.form['precio']
-        
         cur = mysql.connection.cursor()
         cur.execute("""UPDATE productos SET idProducto=%s, nombreProducto=%s,
                        descProducto=%s, cantidadProducto=%s, precioProducto=%s 
                        WHERE idProducto=%s""",
                     (idProducto, nombreProducto, descProducto, cantidadProducto, precioProducto, id))
         mysql.connection.commit()
-        
         flash('Producto actualizado correctamente')
-        return redirect(url_for('listasProductos'))
+        return redirect(url_for('Productos'))
 
 @app.route("/Vendedor")
 def vendedor():
     if 'logueado' in session and session['logueado']:
-        
-        # Obtener solo los datos del usuario actual
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        cur.close()
-
-        # Renderizar la plantilla con los datos del usuario
-        return render_template('vendedor/vendedor.html', user=user)   
+        if 'logueado' in session and session['logueado']:
+            if 'rol' in session:
+                rol=session['rol']
+                if rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta
+                else:
+                    if rol=='Comprador':
+                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                        return alerta
+                    elif rol=='Vendedor':
+                        cur = mysql.connection.cursor()
+                        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                        user = cur.fetchone()
+                        cur.close()
+                        return render_template('vendedor/vendedor.html', user=user) 
     else:
-        # Redirigir si el usuario no está logueado
-        return redirect(url_for('log'))
-    
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+
 #pagina de registar los productoss
 @app.route('/RegistraProductos')
 def producto():
-    cur = mysql.connection.cursor()
-    mysql.connection.commit()
-    cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-    user = cur.fetchone()
-    return render_template('/vendedor/registroProducto.html',user=user)
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Vendedor':
+                cur = mysql.connection.cursor()
+                mysql.connection.commit()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template('/vendedor/registroProducto.html',user=user)
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 #conexion bd con los productos
 @app.route('/producto', methods=['GET','POST'])
@@ -304,73 +384,28 @@ def formProducto():
         mysql.connection.commit()     
         flash('Producto creado correctamente')
         return redirect(url_for('producto'))
-
-@app.route('/listaProducto')
-def listaProducto():
-    if 'logueado' in session and session['logueado']:
-        Usuario = session['email']
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM productos WHERE idVendedor = %s', (Usuario,))
-        data = cur.fetchall()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        return render_template('/vendedor/crud_producto.html', produ=data,user=user)
-    else:
-        flash('Debes iniciar sesión para acceder a esta página.')
-        return redirect(url_for('log'))
-
-#metodo eliminar del crud adminitrador
-@app.route('/eliminarProducto/<int:id>')
-def eliminarPr(id):
-    cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM productos WHERE idProducto = %s", (id,))
-    mysql.connection.commit()
-    return redirect(url_for('listaProducto'))
-
-#pagina de formulaario para editar
-@app.route('/editarProducto/<id>')
-def editarPr(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM productos WHERE idProducto = %s", (id,))
-    data = cur.fetchall()
-    return render_template('/vendedor/editarProducto.html',produ=data[0])
-
-#metodo para actualizar en el crud
-@app.route('/updateProducto/<id>', methods=['GET','POST'])
-def updatePr(id):
-    if request.method == 'POST':
-        idProducto = request.form['idProducto']
-        nombreProducto = request.form['nombreProducto']
-        descProducto = request.form['descripcion']
-        cantidadProducto = request.form['unidades']
-        precioProducto = request.form['precio']
-        
-        cur = mysql.connection.cursor()
-        cur.execute("""UPDATE productos SET idProducto=%s, nombreProducto=%s,
-                       descProducto=%s, cantidadProducto=%s, precioProducto=%s 
-                       WHERE idProducto=%s""",
-                    (idProducto, nombreProducto, descProducto, cantidadProducto, precioProducto, id))
-        mysql.connection.commit()
-        
-        flash('Producto actualizado correctamente')
-        return redirect(url_for('listaProducto'))
     
 @app.route("/Comprador")
 def comprador():
     if 'logueado' in session and session['logueado']:
-        
-        # Obtener solo los datos del usuario actual
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        cur.close()
-
-        # Renderizar la plantilla con los datos del usuario
-        return render_template('comprador/comprador.html', user=user)
-    
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                cur.close()
+                return render_template('comprador/comprador.html', user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
     else:
-        # Redirigir si el usuario no está logueado
-        return redirect(url_for('log'))
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 @app.route("/Tienda")
 def compras():
