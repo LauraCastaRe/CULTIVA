@@ -13,17 +13,17 @@ app.config['MYSQL_DB'] = 'registrosCULTIVARED'
 mysql = MySQL(app)
 app.secret_key='mysecretkey' 
 
-#pagina inicial
+#Pagina Inicio
 @app.route('/')
 def index():
     return render_template('inicio.html')
 
-#pagina registro de usuario
+#Pagina registro de usuario
 @app.route('/Registrate')
 def registro():
     return render_template('registro.html')
 
-#conexion bd con formulario de registro
+#conexion bd de registro usuario
 @app.route('/formulario', methods=['POST'])
 def form():
     if request.method == 'POST':
@@ -39,21 +39,26 @@ def form():
         
         # Verificar si la cédula ya está registrada
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM usuarios WHERE id = %s", (ide,))
+        cur.execute("SELECT * FROM usuarios WHERE id = %s", (ide,))       
         user = cur.fetchone()
         if user:
-            flash('La cedula ya está registrada.')
-            return redirect(url_for('registro'))
+            alerta = """<script> alert("Esta cedula ya esta registrada");window.location.href = "/Registrate"; </script>"""
+            return 
+        cur.execute("SELECT * FROM usuarios WHERE email = %s", (email,)) 
+        user1 = cur.fetchone()
+        if user1:
+            alerta = """<script> alert("El email ya esta registrado");window.location.href = "/Registrate"; </script>"""
+            return alerta
 
         # Validar la contraseña
         if len(contrasena1) < 8 or not re.search(r'[A-Z]', contrasena1) or not re.search(r'\d', contrasena1):
-            flash('La contraseña debe tener al menos 8 caracteres, una letra en mayúscula y un número.')
-            return redirect(url_for('registro'))
+            alerta = """<script> alert("La contraseña debe tener por lo menos 8 carateres, una letra en mayuscula y un numero");window.location.href = "/Registrate";</script>"""
+            return alerta
 
         # Verificar la coincidencia de las contraseñas
         if contrasena1 != contrasena2:
-            flash('Las contraseñas no coinciden.')
-            return redirect(url_for('registro'))
+            alerta = """<script> alert("Las contraseñas no coinciden");window.location.href = "/Registrate"; </script>"""
+            return alerta
 
         # Insertar el usuario en la base de datos
         cur.execute("INSERT INTO usuarios (ID, nombre, apellido, genero, telefono, email, contrasena1, contrasena2, rol) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
@@ -61,8 +66,8 @@ def form():
     
         mysql.connection.commit()
         
-        flash('Usuario registrado correctamente.')
-        return redirect(url_for('index'))
+        alerta = """<script> alert("Usuario registrado correctamente"); window.location.href = "/"; </script>"""
+        return alerta
 
     # Si la solicitud no es POST, redirigir al formulario de registro
     return redirect(url_for('registro'))
@@ -90,21 +95,23 @@ def log():
             session['id'] = account[0]
 
             if session['rol'] == 'Admin':
-                return redirect(url_for('admin'))
+                alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Administrador"; </script>"""
+                return alerta
             elif session['rol'] == 'Vendedor':
-                return redirect(url_for('vendedor'))
+                alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Vendedor"; </script>"""
+                return alerta
             elif session['rol'] == 'Comprador':
-                return redirect(url_for('comprador'))
+                alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Comprador"; </script>"""
+                return alerta
         else:
-            time.sleep(1)
-            return render_template("login.html")
+            alerta = """<script> alert("Usuario o contraseña incorrecta"); window.location.href = "/login"; </script>"""
+            return alerta
 
     return render_template("login.html")
 
 #cierra sesion
 @app.route('/logout')
 def logout():
-    # Cerrar sesión eliminando la variable de sesión 'logged_in'
     session.clear()
     return redirect(url_for('iniciar'))
 
@@ -154,7 +161,7 @@ def crudUsuario():
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
 
-#metodo eliminar del crud adminitrador
+#metodo eliminar de usuarios
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
     if 'logueado' in session and session['logueado']:
@@ -176,7 +183,7 @@ def eliminar(id):
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
     
-#pagina de formulaario para editar
+#pagina de formulaario para editar usuarios
 @app.route('/editar/<id>')
 def editar(id):
         if 'logueado' in session and session['logueado']:
@@ -198,7 +205,7 @@ def editar(id):
             alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
             return alerta
 
-#metodo para actualizar en el crud
+#metodo para actualizar en usuarios
 @app.route('/update/<int:id>', methods=['POST'])
 def update(id):
     if request.method == 'POST':
@@ -258,6 +265,7 @@ def Productos():
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
          
+#metodo para eliminar productos
 @app.route('/eliminarProducto/<int:id>')
 def eliminarProdu(id):
     if 'logueado' in session and session['logueado']:
@@ -282,6 +290,7 @@ def eliminarProdu(id):
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
 
+#pagina para editar productos
 @app.route('/editarProducto/<id>')
 def editarProdu(id):
     if 'logueado' in session and session['logueado']:
@@ -323,6 +332,7 @@ def updateProdu(id):
         flash('Producto actualizado correctamente')
         return redirect(url_for('Productos'))
 
+#pagina vendedor
 @app.route("/Vendedor")
 def vendedor():
     if 'logueado' in session and session['logueado']:
@@ -410,63 +420,118 @@ def comprador():
 @app.route("/Tienda")
 def compras():
     if 'logueado' in session and session['logueado']:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM productos')
-        data = cur.fetchall()
-        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-        user = cur.fetchone()
-        return render_template("comprador/compras.html",produ=data,user=user)
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM productos')
+                data = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("comprador/compras.html",produ=data,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
     else:
-        return redirect(url_for('log'))
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 @app.route('/agregar_al_carrito', methods=['POST'])
 def agregar_al_carrito():
-    try:
         data = request.form
         producto_id = data['id_producto']
         nombre_producto = data['nombre_producto']
         precio_producto = data['precio_producto']
         cantidad = int(data['cantidad'])
-
         cursor = mysql.connection.cursor()
         cursor.execute("INSERT INTO carrito (producto_id, nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s, %s)", (producto_id, nombre_producto, precio_producto, cantidad))
         mysql.connection.commit()
-
-        return jsonify({"message": "Producto añadido al carrito correctamente"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        alerta = """<script> alert("Producto agregado al carrito"); window.location.href = "/Tienda"; </script>"""
+        return alerta
 
 @app.route('/carrito')
 def ver_carrito():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM carrito")
-    productos_carrito = cursor.fetchall()
-    cursor.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-    user = cursor.fetchone()
-    total = sum([producto[3] * producto[4] for producto in productos_carrito])  # Calcula el total
-    return render_template('comprador/carrito.html', productos_carrito=productos_carrito, total=total,user=user)
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cursor = mysql.connection.cursor()
+                cursor.execute("SELECT * FROM carrito")
+                productos_carrito = cursor.fetchall()
+                cursor.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cursor.fetchone()
+                total = sum([producto[3] * producto[4] for producto in productos_carrito])  # Calcula el total
+                return render_template('comprador/carrito.html', productos_carrito=productos_carrito, total=total,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 @app.route('/pagar', methods=['POST'])
 def pagar():
-    try:
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':  
+                cursor = mysql.connection.cursor()
+                cursor.execute("SELECT SUM(precio_producto * cantidad) FROM carrito")
+                total = cursor.fetchone()[0]
+                user = session.get('email')
+                cursor.execute("INSERT INTO transacciones (fechaVenta, total, idComprador) VALUES (%s, %s, %s)",
+                                (datetime.now(), total, user))
+                mysql.connection.commit()
+                cursor.execute("DELETE FROM carrito")
+                mysql.connection.commit()
+                alerta = """<script> alert("Pago realizaado correctamente"); window.location.href = "/Tienda"; </script>"""
+                return alerta
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT SUM(precio_producto * cantidad) FROM carrito")
-        total = cursor.fetchone()[0]
-        user = session.get('email')
-
-        cursor.execute("INSERT INTO transacciones (fechaVenta, total, idComprador) VALUES (%s, %s, %s)",
-                        (datetime.now(), total, user))
-        mysql.connection.commit()
-
-        cursor.execute("DELETE FROM carrito")
-        mysql.connection.commit()
-
-        return jsonify({"message": "Pago procesado correctamente. Carrito vaciado."}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
+@app.route('/MisCompras')
+def compra():
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM transacciones')
+                data = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("administrador/productos.html", produ=data,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Comprador':
+                    Usuario = session['email']
+                    cur = mysql.connection.cursor()
+                    cur.execute('SELECT * FROM transacciones WHERE idComprador = %s', (Usuario,))
+                    data = cur.fetchall()
+                    cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                    user = cur.fetchone()
+                    return render_template('/comprador/crud_compras.html', compras=data,user=user)
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 if __name__ == '__main__':
     app.run(debug=True)

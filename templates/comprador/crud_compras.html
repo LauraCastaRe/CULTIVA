@@ -1,0 +1,37 @@
+{% extends 'comprador/baseComprador.html' %}
+{% block customCSS %}
+<link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/Compras">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compra in compras %}
+                                <tr>
+                                    <td>{{ compra.0 }}</td>
+                                    <td>{{ compra.2 }}</td>
+                                    <td>{{ compra.3 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="/Comprador">Atras</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
