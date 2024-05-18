@@ -101,7 +101,7 @@ def log():
                 alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Vendedor"; </script>"""
                 return alerta
             elif session['rol'] == 'Comprador':
-                alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Comprador"; </script>"""
+                alerta = """<script> alert("Bienvenido a CULTIVARED"); window.location.href = "/Tienda"; </script>"""
                 return alerta
         else:
             alerta = """<script> alert("Usuario o contraseña incorrecta"); window.location.href = "/login"; </script>"""
@@ -183,7 +183,7 @@ def eliminar(id):
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
     
-#pagina de formulaario para editar usuarios
+#pagina de formulario para editar usuarios
 @app.route('/editar/<id>')
 def editar(id):
         if 'logueado' in session and session['logueado']:

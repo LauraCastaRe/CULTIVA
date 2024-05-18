@@ -1,0 +1,142 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #B22222; /* Rojo oscuro */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FFD700; /* Amarillo dorado */
+}
+
+.navbar .li {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* Blanco */
+}
+
+.navbar .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar .nav-links li {
+    margin-right: 20px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #fff; /* Blanco */
+}
+.navbar .nav-links a:hover {
+    color: #FFD700; /* Naranja */
+}
+
+.navbar .dropdown-menu {
+    background-color: #B22222; /* Rojo oscuro */
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #FFD700; /* Amarillo dorado */
+}
+
+.search-form{
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 2px solid #fff;
+    border-radius: 2rem;
+    background-color: #fff;
+    height: 1.8rem;    
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.search-form input{
+    outline: none;
+    font-family: sans-serif;
+    border: none;
+    width: 10rem;
+    font-size: 1rem;
+    padding: 0.2rem;
+    color: #777;
+    cursor: pointer;
+}
+
+.search-form input::-webkit-search-cancel-button{
+    appearance: none;
+}
+
+.search-form .btn-search{
+    border: none;
+    background-color: #B22222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0.5rem;
+
+}
+.search-form img{
+    height: 20px;
+}
+
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar .nav-links li {
+        margin: 10px 0;
+    }
+
+    .service-card, .about-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    section h2 {
+        font-size: 28px;
+    }
+
+    .service-card, .about-card {
+        padding: 15px;
+    }
+
+    section {
+        padding: 40px 10px;
+    }
+
+    .navbar .nav-links {
+        align-items: center;
+    }
+}

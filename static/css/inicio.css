@@ -52,7 +52,7 @@ body {
 }
 
 .navbar .nav-links a:hover {
-    color: #FF8C00; /* Naranja */
+    color: #FFD700; /* Naranja */
 }
 
 .navbar .dropdown-menu {
@@ -60,7 +60,7 @@ body {
 }
 
 .navbar .dropdown-menu a:hover {
-    color: #FF8C00; /* Naranja */
+    color: #FFD700; /* Amarillo dorado */
 }
 
 /* Estilos para las secciones */
@@ -69,11 +69,12 @@ section {
     padding: 80px 20px;
     width: 100%;
     box-sizing: border-box;
+    height: 100%;
 }
 
 section h2 {
     font-size: 40px;
-    color: #FF8C00; /* Naranja */
+    color: #FFD700; /* Amarillo dorado */
     margin-bottom: 20px;
 }
 
@@ -109,9 +110,12 @@ section ul {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.service-card .card, .about-card .card{
+    border: none;
+}
 .service-card img, .about-card img {
     width: 100%;
-    height: auto;
+    height: 150px;
     border-radius: 20px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

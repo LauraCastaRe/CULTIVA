@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       
+    <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="static/css/inicio.css">
+    <link rel="stylesheet" href="static/css/comprador/baseComprador.css">
     
     {% block customCSS %}
     {% endblock %}
 </head>
 <body>
-    
+
+
     <nav class="navbar sticky-top">
         <div class="container">
-            <a href="#" class="logo"><span class="li">Cultiva</span>Red</a>
+            <a href="/" class="logo" title="CultivaRed"><span class="li">Cultiva</span>Red</a>
             <ul class="nav-links">
-                <li><a href="/Tienda">Compras</a></li>
-                <li><a href="/carrito">Carrito </a></li>
+                <form class="search-form">
+                    <button class="btn-search">
+                        <img src="/static/img/buscar.svg">
+                    </button>
+                    <input type="search" placeholder="Buscar">  
+                </form>
+                <li><a href="/Tienda" title="Servicios">Productos</a></li>
+                <li><a href="/carrito" title="Sobre nosotros">Carrito</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">{{user[1]}}</a>
+                    aria-haspopup="true" aria-expanded="false" title="{{user[1]}}">{{user[1]}}</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/Comprador" title="Mi perfil">Mi perfil</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logout">Cierra Sesion</a>
+                        <a class="dropdown-item" href="/logout" title="Cierra Sesión">Cierra Sesion</a>
                     </div>
                 </li>
             </ul>
