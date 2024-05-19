@@ -1,10 +1,100 @@
-body {
-    font-family: sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("/static/img/Back.jpg") center;
+  }
+  
+  .registro {
+    width: 800px;
+    background: #ffe699;
+    border-radius: 10px;
+    color: black;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .registro h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .registro .box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px;
+  }
+  
+  .registro .campo {
+    position: relative;
+    width: 48%;
+    margin: 10px 0;
+  }
+  
+  .registro label {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .registro input[type="text"],
+  .registro input[type="email"],
+  .registro input[type="tel"],
+  .registro input[type="password"],
+  .registro select {
     width: 100%;
-    height: 100%;
-    background-size: 500%;
-    animation: fanimado 10s infinite;
-
-}
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .registro input[type="text"]:focus,
+  .registro input[type="email"]:focus,
+  .registro input[type="tel"]:focus,
+  .registro input[type="password"]:focus,
+  .registro select:focus {
+    border-color: #e67300; /* Rojo más oscuro al enfocar */
+  }
+  
+  .registro button[type="submit"] {
+    width: 100%;
+    background-color: #e67300; /* Rojo más oscuro */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .registro button[type="submit"]:hover {
+    background-color: #b34700; /* Rojo más oscuro al pasar el ratón */
+  }
+  
+  .registro .campo:nth-child(odd) {
+    margin-right: 20px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .registro .campo {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  
+  .registro .campo:last-child {
+    width: 100%;
+  }
+  

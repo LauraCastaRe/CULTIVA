@@ -60,42 +60,23 @@
                             <i class="fa-solid fa-star"></i>
                             <i class="fa-regular fa-star"></i>
                         </div>
-                        <h3>{{ producto.1 }}</h3>
-                        <button type="submit" class="add-cart">
+                        
+                        <h3><input name="nombre_producto" value="{{ producto.1 }}"></h3>
+                        <button type="submit" class="add-cart" >
                             <i class="fa-solid fa-basket-shopping"></i>
                         </button>
-                        <p class="price">${{ producto.4 }}</p>
+                        <p><input name="precio_producto" value="{{ producto.4 }}"></p>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                        </div>
+
                     </form>
             </div>
             {% endfor %}
-            <!-- Producto 2 -->
-            <!--  -->
-            <!--  -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/static/img/cafe-irish.jpg" alt="Cafe Helado" />
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
+        
                 </div>
-                <div class="content-card-product">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </div>
-                    <h3>Cafe Helado</h3>
-                    <span class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </span>
-                    <p class="price">$5.60</p>
-                </div>
-            </div>
-        </div>
+         
     </section>
 
     <section class="gallery">

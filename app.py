@@ -385,12 +385,12 @@ def formProducto():
     if request.method == 'POST':
         idProducto = request.form['idProducto']
         nombreProducto = request.form['nombreProducto']
-        descProducto = request.form['descripcion']
+        categoria= request.form['categoria']
         cantidadProducto = request.form['unidades']
         precioProducto = request.form['precio']
         idVendedor = session.get('email')  
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO productos (idProducto, nombreProducto, descProducto, cantidadProducto, precioProducto, idVendedor) VALUES (%s,%s,%s,%s,%s,%s)", (idProducto, nombreProducto, descProducto,cantidadProducto, precioProducto, idVendedor))
+        cur.execute("INSERT INTO productos (idProducto, nombreProducto, categoria, cantidadProducto, precioProducto, idVendedor) VALUES (%s,%s,%s,%s,%s,%s)", (idProducto, nombreProducto, categoria,cantidadProducto, precioProducto, idVendedor))
         mysql.connection.commit()     
         flash('Producto creado correctamente')
         return redirect(url_for('producto'))
@@ -443,12 +443,12 @@ def compras():
 @app.route('/agregar_al_carrito', methods=['POST'])
 def agregar_al_carrito():
         data = request.form
-        producto_id = data['id_producto']
         nombre_producto = data['nombre_producto']
         precio_producto = data['precio_producto']
         cantidad = int(data['cantidad'])
+
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO carrito (producto_id, nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s, %s)", (producto_id, nombre_producto, precio_producto, cantidad))
+        cursor.execute("INSERT INTO carrito (nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s)", (nombre_producto, precio_producto, cantidad))
         mysql.connection.commit()
         alerta = """<script> alert("Producto agregado al carrito"); window.location.href = "/Tienda"; </script>"""
         return alerta
@@ -464,7 +464,7 @@ def ver_carrito():
                 productos_carrito = cursor.fetchall()
                 cursor.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cursor.fetchone()
-                total = sum([producto[3] * producto[4] for producto in productos_carrito])  # Calcula el total
+                total = sum([producto[1] * producto[2] for producto in productos_carrito])  # Calcula el total
                 return render_template('comprador/carrito.html', productos_carrito=productos_carrito, total=total,user=user)
             else:
                 if rol=='Vendedor':

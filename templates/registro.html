@@ -2,122 +2,85 @@
 {% block body %}
 
 {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-       {% endif %}
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
 {% endwith %}
 
 {% block customCSS %}
-<link rel="stylesheet" href="{{url_for('static',filename='css/registro.css')}}">
+<link rel="stylesheet" href="static/css/registro.css">
 {% endblock %}
-<body>
-  
-</body>
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row justify-content-center align-items-center h-100">
-      <div class="col-12 col-lg-9 col-xl-7">
-        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-          <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Regístrate</h3>
 
-            <form action="/formulario" method="POST">
-
-              <!-- Datos personales -->
-              <fieldset>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <label for="identificacion">Identificación</label>
-                    <input type="text" name="identificacion" id="identificacion" class="form-control" required>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" required>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" name="apellido" id="apellido" class="form-control" required>
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="genero" id="generoMujer" value="Mujer" checked>
-                      <label class="form-check-label" for="generoMujer">Mujer</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="genero" id="generoHombre" value="Hombre">
-                      <label class="form-check-label" for="generoHombre">Hombre</label>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-
-              <!-- Contacto -->
-              <fieldset>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" required>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" name="telefono" id="telefono" class="form-control" required>
-                  </div>
-                </div>
-              </fieldset>
-
-              <!-- Contraseña -->
-              <fieldset>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <label for="contrasena1">Contraseña</label>
-                    <input type="password" name="contrasena1" id="contrasena1" class="form-control" required>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <label for="contrasena2">Confirmar Contraseña</label>
-                    <input type="password" name="contrasena2" id="contrasena2" class="form-control" required>
-                  </div>
-                </div>
-              </fieldset>
-
-              <!-- Rol -->
-              <fieldset>
-
-                <div class="row">
-                  <div class="col-12 mb-4">
-                    <label for="rol">Rol</label>
-                    <select name="rol" id="rol" class="form-select" required>
-                      <option value="" disabled selected>Elige una opción</option>
-                      <option value="Comprador">Comprador</option>
-                      <option value="Vendedor">Vendedor</option>
-                    </select>
-                  </div>
-                </div>
-              </fieldset>
-
-              <div class="mt-4 pt-2">
-                <button type="submit" class="btn btn-primary btn-lg" id="enviarRegistro" title="Enviar">Enviar</button>
-              </div>
-              <p class="mt-3 mb-0" title="¿Ya tienes cuenta? Inicia Sesión">¿Ya tienes cuenta? <a href="/IniciaSesion">Inicia Sesión</a></p>
-            </form>
-          </div>
-        </div>
+<div class="registro">
+  <h1 title="Bienvenido">¡Bienvenido!</h1>
+  <form action="/formulario" method="POST">
+    <div class="box">
+      <div class="campo">
+        <label for="identificacion">Identificación</label>
+        <input type="text" name="identificacion" id="identificacion" required><br>
       </div>
-    </div>
-  </div>
-  <script src="static/js/msj.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</section>
+    
 
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre" required><br>
+      </div>
+
+      <div class="campo">
+        <label for="apellido">Apellido</label>
+         <input type="text" name="apellido" id="apellido" required><br>
+      </div>
+
+
+  
+      <div class="campo">
+        <label for="genero">Género</label><br>
+        <input type="radio" name="genero" id="generoMujer" value="Mujer" checked>
+        <label for="generoMujer">Mujer</label>
+        <input type="radio" name="genero" id="generoHombre" value="Hombre">
+        <label for="generoHombre">Hombre</label><br>
+      </div>
+   
+
+   
+      <div class="campo">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required><br>
+      </div>
+   
+
+  
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" name="telefono" id="telefono" required><br>
+      </div>
+ 
+      <div class="campo">
+        <label for="contrasena1">Contraseña</label>
+        <input type="password" name="contrasena1" id="contrasena1" required><br>
+        <label for="contrasena2">Confirmar Contraseña</label>
+        <input type="password" name="contrasena2" id="contrasena2" required><br>
+      </div>
+    
+
+
+      <div class="campo">
+        <label for="rol">Rol</label>
+        <select name="rol" id="rol" required>
+        <option value="" disabled selected>Elige una opción</option>
+        <option value="Comprador">Comprador</option>
+        <option value="Vendedor">Vendedor</option>
+        </select><br>
+      </div>
+  
+
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+  <p>¿Ya tienes cuenta? <a href="/IniciaSesion">Inicia Sesión</a></p>
+</div>
 {% endblock %}
