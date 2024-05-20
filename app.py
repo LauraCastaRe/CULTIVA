@@ -22,8 +22,7 @@ def index():
 def registro():
     return render_template('registro.html')
 
-#conexion bd de registro usuario
-@app.route('/formulario', methods=['POST'])
+@app.route('/formulario', methods=['GET','POST'])
 def form():
     if request.method == 'POST':
         ide = request.form['identificacion']
@@ -42,7 +41,9 @@ def form():
         user = cur.fetchone()
         if user:
             alerta = """<script> alert("Esta cedula ya esta registrada");window.location.href = "/Registrate"; </script>"""
-            return 
+            return alerta
+
+        # Verificar si el email ya está registrado
         cur.execute("SELECT * FROM usuarios WHERE email = %s", (email,)) 
         user1 = cur.fetchone()
         if user1:
@@ -51,7 +52,7 @@ def form():
 
         # Validar la contraseña
         if len(contrasena1) < 8 or not re.search(r'[A-Z]', contrasena1) or not re.search(r'\d', contrasena1):
-            alerta = """<script> alert("La contraseña debe tener por lo menos 8 carateres, una letra en mayuscula y un numero");window.location.href = "/Registrate";</script>"""
+            alerta = """<script> alert("La contraseña debe tener por lo menos 8 caracteres, una letra en mayúscula y un número");window.location.href = "/Registrate";</script>"""
             return alerta
 
         # Verificar la coincidencia de las contraseñas
@@ -68,8 +69,8 @@ def form():
         alerta = """<script> alert("Usuario registrado correctamente"); window.location.href = "/"; </script>"""
         return alerta
 
-    # Si la solicitud no es POST, redirigir al formulario de registro
-    return redirect(url_for('registro'))
+    # Si el método es GET, devolver algo aquí si es necesario
+    return render_template("inico.html")
 
 #pagina login de usuario
 @app.route('/IniciaSesion')
