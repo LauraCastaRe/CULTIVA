@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<script src="{{ url_for('static', filename='js/validarContrasena.js') }}"></script>
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/registro.css')}}">
+{% endblock %}
+
+<link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+<link rel="stylesheet" href="static/css/registroProducto.css"> 
 
 <section class="vh-100 gradient-custom">
   <div class="container py-5 h-100">
@@ -16,39 +21,59 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <label for="idProducto" class="form-label">Código Producto</label>
-                  <input type="text" name="idProducto" class="form-control" id="idProducto"  value="{{produ.0}}" readonly>
+                  <input type="text" name="idProducto" class="form-control"value="{{produ.0}}" readonly title="Codigo Producto">
                 </div>
 
                 <div class="col-md-6 mb-4">
                   <label for="nombreProducto" class="form-label">Nombre Producto</label>
-                  <input type="text" name="nombreProducto" class="form-control" id="nombreProducto"  value="{{produ.1}}" required>
+                  <input type="text" name="nombreProducto" class="form-control"  value="{{produ.1}}" title="Nombre productos"
+                   required>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 mb-4">
-                  <label for="descripcion" class="form-label">Descripción</label>
-                  <input type="text" name="descripcion" class="form-control" id="descripcion"  value="{{produ.2}}" required>
+                  <label for="categoria">Seleccione una categoría de productos:</label>
+<select id="categoria" name="categoria" class="form-select" title="Categoria del producto" required>
+    <option value="">Elige la categoría</option>
+    <option value="granos_cereales" {% if produ.2 == 'granos_cereales' %} selected {% endif %}>Granos y Cereales</option>
+    <option value="legumbres" {% if produ.2 == 'legumbres' %} selected {% endif %}>Legumbres</option>
+    <option value="tuberculos_raices" {% if produ.2 == 'tuberculos_raices' %} selected {% endif %}>Tubérculos y Raíces</option>
+    <option value="hortalizas_verduras" {% if produ.2 == 'hortalizas_verduras' %} selected {% endif %}>Hortalizas y Verduras</option>
+    <option value="frutas" {% if produ.2 == 'frutas' %} selected {% endif %}>Frutas</option>
+    <option value="ganado_bovino" {% if produ.2 == 'ganado_bovino' %} selected {% endif %}>Ganado Bovino</option>
+    <option value="ganado_porcino" {% if produ.2 == 'ganado_porcino' %} selected {% endif %}>Ganado Porcino</option>
+    <option value="aves_corral" {% if produ.2 == 'aves_corral' %} selected {% endif %}>Aves de Corral</option>
+    <option value="ganado_caprino_ovino" {% if produ.2 == 'ganado_caprino_ovino' %} selected {% endif %}>Ganado Caprino y Ovino</option>
+    <option value="productos_lacteos" {% if produ.2 == 'productos_lacteos' %} selected {% endif %}>Productos Lácteos</option>
+    <option value="productos_apicolas" {% if produ.2 == 'productos_apicolas' %} selected {% endif %}>Productos Apícolas</option>
+    <option value="productos_pesca_acuicultura" {% if produ.2 == 'productos_pesca_acuicultura' %} selected {% endif %}>Productos de Pesca y Acuicultura</option>
+    <option value="productos_recoleccion_silvestre" {% if produ.2 == 'productos_recoleccion_silvestre' %} selected {% endif %}>Productos de Recolección Silvestre</option>
+    <option value="productos_artesanales" {% if produ.2 == 'productos_artesanales' %} selected {% endif %}>Productos Artesanales</option>
+    <option value="productos_transformados" {% if produ.2 == 'productos_transformados' %} selected {% endif %}>Productos Transformados</option>
+    <option value="semillas_plantones" {% if produ.2 == 'semillas_plantones' %} selected {% endif %}>Semillas y Plantones</option>
+    <option value="flores_plantas_ornamentales" {% if produ.2 == 'flores_plantas_ornamentales' %} selected {% endif %}>Flores y Plantas Ornamentales</option>
+</select>
+
                 </div>
                 
                 <div class="col-md-6 mb-4">
                   <label for="unidades" class="form-label">Unidades</label>
-                  <input type="number" name="unidades" class="form-control" id="unidades"  value="{{produ.3}}" required>
+                  <input type="number" name="unidades" class="form-control" tittle="unidades" value="{{produ.3}}">
                 </div>
               </div>
               
               <div class="row">
                 <div class="col-md-6 mb-4">
-                  <label for="precio" class="form-label">Precio</label>
-                  <input type="number" name="precio" class="form-control" id="precio"  value="{{produ.4}}" required>
+                  <label for="precio" class="form-label">Precio por libras(500gr)</label>
+                  <input type="number" name="precio" class="form-control" title="precio"  value="{{produ.4}}" required>
                 </div>
-
-          
+              </div>
 
               <div class="mt-4 pt-2">
                 <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('¿Estás seguro de que deseas editar este producto?')">Actualizar</button>
+                <a href="/Productos" class="btn btn-secondary btn-lg" title="Atras">Atrás</a>
               </div>
-              <a href="/listaProducto">atras</a>
    
             </form>
           </div>
@@ -56,6 +81,7 @@
       </div>
     </div>
   </div>
+  
 </section>
 
 {% endblock %}

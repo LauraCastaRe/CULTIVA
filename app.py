@@ -319,14 +319,14 @@ def updateProdu(id):
     if request.method == 'POST':
         idProducto = request.form['idProducto']
         nombreProducto = request.form['nombreProducto']
-        descProducto = request.form['descripcion']
+        categoria = request.form['categoria']
         cantidadProducto = request.form['unidades']
         precioProducto = request.form['precio']
         cur = mysql.connection.cursor()
         cur.execute("""UPDATE productos SET idProducto=%s, nombreProducto=%s,
-                       descProducto=%s, cantidadProducto=%s, precioProducto=%s 
+                       categoria=%s, cantidadProducto=%s, precioProducto=%s 
                        WHERE idProducto=%s""",
-                    (idProducto, nombreProducto, descProducto, cantidadProducto, precioProducto, id))
+                    (idProducto, nombreProducto, categoria, cantidadProducto, precioProducto, id))
         mysql.connection.commit()
         flash('Producto actualizado correctamente')
         return redirect(url_for('Productos'))
