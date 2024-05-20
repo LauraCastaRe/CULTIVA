@@ -446,7 +446,7 @@ def compras():
         if 'rol' in session:
             rol=session['rol']
             if rol=='Comprador':
-                cur = mysql.connection.cursor()
+                cur = mysql.connection.cursor() 
                 cur.execute('SELECT * FROM productos')
                 data = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))

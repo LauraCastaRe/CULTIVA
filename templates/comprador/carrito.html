@@ -2,7 +2,7 @@
 
 {% block body %}
 <body>
-
+    <link rel="stylesheet" href="static/css/comprador/carrito.css">
     <div class="container">
         <h1 class="my-4">Carrito de Compras</h1>
         <table class="table">
@@ -25,10 +25,15 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h3>Total: ${{ total }}</h3>
-        <form action="/pagar" method="POST">
-            <button type="submit" class="btn btn-success">Pagar</button>
-        </form>
+        <div class="total-container">
+            <h3>Total: ${{ total }}</h3>
+            <form action="/pagar" method="POST">
+                <button type="submit" class="btn btn-success">Pagar</button>
+            </form>
+        </div>
     </div>
 </body>
+
+
+
 {% endblock %}
