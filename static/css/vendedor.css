@@ -1,0 +1,32 @@
+
+.carda {
+ 
+    justify-content: space-evenly;
+    border: none; /* Elimina el borde de las tarjetas */
+    width: 400px; /* Establece un ancho máximo para las tarjetas */
+    margin: 10%; /* Espacio entre las tarjetas */
+    
+}
+
+
+.carda img {
+    width: 70%; /* Asegura que la imagen ocupe todo el ancho de la tarjeta */
+    border-top-left-radius: 15px; /* Redondea las esquinas de la imagen */
+    border-top-right-radius: 15px; /* Redondea las esquinas de la imagen */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carda .card-body {
+    padding: 20px; /* Añade un espacio interno al cuerpo de la tarjeta */
+}
+
+.carda .card-title {
+    font-size: 12; /* Tamaño del título de la tarjeta */
+    text-align: center;
+}
+.carda .card-text {
+    font-size: 1rem; /* Tamaño del texto de la tarjeta */
+    text-align: center;
+}

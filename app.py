@@ -1,5 +1,4 @@
-import time
-from flask import Flask, render_template, request,redirect, url_for,flash,session,jsonify
+from flask import Flask, render_template, request,redirect, url_for,flash,session
 from flask_mysqldb import MySQL
 import re
 from datetime import datetime
@@ -11,7 +10,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'registrosCULTIVARED'
 mysql = MySQL(app)
-app.secret_key='mysecretkey' 
+app.secret_key='mysecretkey'
 
 #Pagina Inicio
 @app.route('/')
@@ -113,7 +112,7 @@ def log():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('iniciar'))
+    return redirect(url_for('index'))
 
 #vista administrador
 @app.route('/Administrador')
@@ -332,9 +331,8 @@ def updateProdu(id):
         flash('Producto actualizado correctamente')
         return redirect(url_for('Productos'))
 
-#pagina vendedor
 @app.route("/Vendedor")
-def vendedor():
+def vend():
     if 'logueado' in session and session['logueado']:
         if 'logueado' in session and session['logueado']:
             if 'rol' in session:
@@ -356,6 +354,30 @@ def vendedor():
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
 
+#pagina vendedor
+@app.route("/Perfil")
+def vendedor():
+    if 'logueado' in session and session['logueado']:
+        if 'logueado' in session and session['logueado']:
+            if 'rol' in session:
+                rol=session['rol']
+                if rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta
+                else:
+                    if rol=='Comprador':
+                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                        return alerta
+                    elif rol=='Vendedor':
+                        cur = mysql.connection.cursor()
+                        cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                        user = cur.fetchone()
+                        cur.close()
+                        return render_template('vendedor/perfil.html', user=user) 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+
 #pagina de registar los productoss
 @app.route('/RegistraProductos')
 def producto():
@@ -367,6 +389,7 @@ def producto():
                 mysql.connection.commit()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cur.fetchone()
+                alerta="""<script> alert("Producto registrado."); window.location.href = "/Vendedor"; </script>"""
                 return render_template('/vendedor/registroProducto.html',user=user)
             else:
                 if rol=='Comprador':
@@ -394,7 +417,6 @@ def formProducto():
         mysql.connection.commit()     
         flash('Producto creado correctamente')
         return redirect(url_for('producto'))
-    
 @app.route("/Comprador")
 def comprador():
     if 'logueado' in session and session['logueado']:
@@ -412,7 +434,7 @@ def comprador():
                     return alerta
                 elif rol=='Admin':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
-                    return alerta 
+                    return alerta
     else:
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta

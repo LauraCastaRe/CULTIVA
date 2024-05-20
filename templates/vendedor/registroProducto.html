@@ -2,6 +2,7 @@
 
 {% block body %}
 <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+<link rel="stylesheet" href="static/css/registroProducto.css"> 
 
 <section class="vh-100 gradient-custom">
   <div class="container py-5 h-100">
@@ -16,61 +17,67 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <label for="idProducto" class="form-label">Código Producto</label>
-                  <input type="text" name="idProducto" class="form-control" id="idProducto" required>
+                  <input type="text" name="idProducto" class="form-control" placeholder="Ej: 123 " title="Codigo Producto" required>
                 </div>
 
                 <div class="col-md-6 mb-4">
                   <label for="nombreProducto" class="form-label">Nombre Producto</label>
-                  <input type="text" name="nombreProducto" class="form-control" id="nombreProducto" required>
+                  <input type="text" name="nombreProducto" class="form-control" placeholder="Ej: Yuca" title="Nombre productos"
+                   required>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 mb-4">
-    <label for="categoria">Seleccione una categoría de productos:</label>
-    <select id="categoria" name="categoria">
-        <option value="granos_cereales">Granos y Cereales</option>
-        <option value="legumbres">Legumbres</option>
-        <option value="tuberculos_raices">Tubérculos y Raíces</option>
-        <option value="hortalizas_verduras">Hortalizas y Verduras</option>
-        <option value="frutas">Frutas</option>
-        <option value="ganado_bovino">Ganado Bovino</option>
-        <option value="ganado_porcino">Ganado Porcino</option>
-        <option value="aves_corral">Aves de Corral</option>
-        <option value="ganado_caprino_ovino">Ganado Caprino y Ovino</option>
-        <option value="productos_lacteos">Productos Lácteos</option>
-        <option value="productos_apicolas">Productos Apícolas</option>
-        <option value="productos_pesca_acuicultura">Productos de Pesca y Acuicultura</option>
-        <option value="productos_recoleccion_silvestre">Productos de Recolección Silvestre</option>
-        <option value="productos_artesanales">Productos Artesanales</option>
-        <option value="productos_transformados">Productos Transformados</option>
-        <option value="semillas_plantones">Semillas y Plantones</option>
-        <option value="flores_plantas_ornamentales">Flores y Plantas Ornamentales</option>
-    </select>
-
-               
+                  <label for="categoria">Seleccione una categoría de productos:</label>
+                  <select id="categoria" name="categoria" class="form-select" title="Categoria del producto" required>
+                    <option value="none">Elige la categoria</option>
+                    <option value="granos_cereales">Granos y Cereales</option>
+                    <option value="granos_cereales">Granos y Cereales</option>
+                    <option value="legumbres">Legumbres</option>
+                    <option value="tuberculos_raices">Tubérculos y Raíces</option>
+                    <option value="hortalizas_verduras">Hortalizas y Verduras</option>
+                    <option value="frutas">Frutas</option>
+                    <option value="ganado_bovino">Ganado Bovino</option>
+                    <option value="ganado_porcino">Ganado Porcino</option>
+                    <option value="aves_corral">Aves de Corral</option>
+                    <option value="ganado_caprino_ovino">Ganado Caprino y Ovino</option>
+                    <option value="productos_lacteos">Productos Lácteos</option>
+                    <option value="productos_apicolas">Productos Apícolas</option>
+                    <option value="productos_pesca_acuicultura">Productos de Pesca y Acuicultura</option>
+                    <option value="productos_recoleccion_silvestre">Productos de Recolección Silvestre</option>
+                    <option value="productos_artesanales">Productos Artesanales</option>
+                    <option value="productos_transformados">Productos Transformados</option>
+                    <option value="semillas_plantones">Semillas y Plantones</option>
+                    <option value="flores_plantas_ornamentales">Flores y Plantas Ornamentales</option>
+                  </select>
                 </div>
                 
                 <div class="col-md-6 mb-4">
                   <label for="unidades" class="form-label">Unidades</label>
-                  <input type="number" name="unidades" class="form-control" id="unidades" required>
+                  <input type="number" name="unidades" class="form-control" tittle="unidades" placeholder="Ej: 5 ">
                 </div>
               </div>
               
               <div class="row">
                 <div class="col-md-6 mb-4">
-                  <label for="precio" class="form-label">Precio</label>
-                  <input type="number" name="precio" class="form-control" id="precio" required>
+                  <label for="precio" class="form-label">Precio por libras(500gr)</label>
+                  <input type="number" name="precio" class="form-control" title="precio" placeholder="Ej: 2000" required>
                 </div>
-
+              </div>
 
               <div class="mt-4 pt-2">
-                <button type="submit" class="btn btn-primary btn-lg">Crear Producto</button>
-                <a href="/Vendedor">Atras</a>
+                <button type="submit" class="btn btn-primary btn-lg " title="Crear Producto">Crear Producto</button>
+                <a href="/Vendedor" class="btn btn-secondary btn-lg" title="Atras">Atrás</a>
               </div>
    
             </form>
-    
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </section>
 
 {% endblock %}
