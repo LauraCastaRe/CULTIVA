@@ -1,11 +1,12 @@
 {% extends 'comprador/baseComprador.html' %}
 {% block customCSS %}
 <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
-<link rel="stylesheet" href="static/css/comprador/carrito.css">
+<link rel="stylesheet" href="static/css/comprador/crud_compras.css">
 {% endblock %}
 {% block body %}
 
-<div class="container">
+<div class="container-crud">
+    <h1 class="my-4">Revisa tus compras</h1>
     <div class="row">
         <div class="col">
             <form action="/Compras">
@@ -28,7 +29,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <a href="/Comprador">Atras</a>
+                    <a href="/Tienda" class="btn btn-secondary">Atras</a>
                 </div>
             </form>
         </div>

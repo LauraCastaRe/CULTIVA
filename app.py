@@ -447,11 +447,13 @@ def compras():
             rol=session['rol']
             if rol=='Comprador':
                 cur = mysql.connection.cursor() 
+                cur.execute('SELECT * FROM productos WHERE idProducto IN (1, 1234)')
+                data1 = cur.fetchall()
                 cur.execute('SELECT * FROM productos')
-                data = cur.fetchall()
+                data2 = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cur.fetchone()
-                return render_template("comprador/compras.html",produ=data,user=user)
+                return render_template("comprador/compras.html",producto1=data1,producto2=data2,user=user)
             else:
                 if rol=='Vendedor':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""

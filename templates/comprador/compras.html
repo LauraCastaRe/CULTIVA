@@ -2,8 +2,6 @@
 
 {% block body %}
 
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
@@ -34,42 +32,34 @@
     <section class="container top-products">
         <h1 class="heading-1">Mejores Productos</h1>
 
-        <div class="container-options">
-            <span class="active">Destacados</span>
-            <span>Más recientes</span>
-            <span>Mejores Vendidos</span>
-        </div>
-
         <div class="container-products">
             <!-- Producto 1 -->
-            {% for producto in produ %}
+            {% for producto in producto1 %}
             <div class="card-product">
-                    <div class="container-img">
-                        <img src="/static/img/tomate.png"/>
-                        <div class="button-group">
-                            <span>
-                                <i class="fa-regular fa-eye"></i>
-                            </span>
-                        </div>
+                <div class="container-img">
+                    <img src="/static/img/tomate.png" alt="{{ producto.1 }}"/>
+                    <div class="button-group">
+                        <span>
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
                     </div>
-                    <form class="content-card-product" action="/agregar_al_carrito" method="POST">
-                            
-                        
-                        <h3><input name="nombre_producto" value="{{ producto.1 }}"></h3>
-                        <button type="submit" class="add-cart" >
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
-                        <p><input name="precio_producto" value="{{ producto.4 }}"></p>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
-                        </div>
-
-                    </form>
+                </div>
+                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
+                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p class="precio"><input type="text" name="precio_producto" value="${{ producto.4 }}" readonly></p>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                    </div>
+                    <button type="submit" class="add-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </button>
+                </form>
             </div>
             {% endfor %}
+        </div>
         
-                </div>
+
          
     </section>
 
@@ -98,148 +88,34 @@
     </section>
 
     <section class="container specials">
-        <h1 class="heading-1">Especiales</h1>
-
+        <h1 class="heading-1">Todos nuestros productos</h1>
         <div class="container-products">
             <!-- Producto 1 -->
+            {% for producto in producto2 %}
             <div class="card-product">
                 <div class="container-img">
-                    <img src="/static/img/cafe-irish.jpg" alt="Cafe Irish" />
+                    <img src="/static/img/tomate.png" alt="{{ producto.1 }}"/>
                     <div class="button-group">
                         <span>
                             <i class="fa-regular fa-eye"></i>
                         </span>
                     </div>
                 </div>
-                <div class="content-card-product">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
+                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
+                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p class="precio"><input type="text" name="precio_producto" value="${{ producto.4 }}" readonly></p>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
                     </div>
-                    <h3>Cafe Irish</h3>
-                    <span class="add-cart">
+                    <button type="submit" class="add-cart">
                         <i class="fa-solid fa-basket-shopping"></i>
-                    </span>
-                    <p class="price">$4.60 </p>
-                </div>
-            </div>
-            <!-- Producto 2 -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img
-                        src="/static/img/cafe-irish.jpg"
-                        alt="Cafe incafe-ingles.jpg"
-                    />
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </div>
-                    <h3>Cafe Inglés</h3>
-                    <span class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </span>
-                    <p class="price">$5.70 </p>
-                </div>
-            </div>
-            <!--  -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/static/img/cafe-irish.jpg" alt="Cafe Viena" />
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h3>Cafe Viena</h3>
-                    <span class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </span>
-                    <p class="price">$3.85 </p>
-                </div>
-            </div>
-            <!--  -->
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/static/img/cafe-irish.jpg" alt="Cafe Liqueurs" />
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="content-card-product">
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </div>
-                    <h3>Cafe Liqueurs</h3>
-                    <span class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </span>
-                    <p class="price">$5.60</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-<!--
-    <div class="container">
-        <h1 class="my-4">Lista de Productos</h1>
-        <div class="row">
-            {% for producto in produ %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <img class="card-img-top" src="{{ producto.imagen }}" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ producto.1 }}</h4>
-                        <p class="card-text">Vendedor: {{ producto.5 }}</p>
-                        <p class="card-text">{{ producto.2 }}</p>
-                        <h5>Precio: ${{ producto.4 }}</h5>
-                        <form action="/agregar_al_carrito" method="POST">
-                            <input type="hidden" name="id_producto" value="{{ producto.0 }}">
-                            <input type="hidden" name="nombre_producto" value="{{ producto.1 }}">
-                            <input type="hidden" name="precio_producto" value="{{ producto.4 }}">
-                            <div class="form-group">
-                                <label for="cantidad">Cantidad</label>
-                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
-                        </form>
-                    </div>
-                </div>
+                    </button>
+                </form>
             </div>
             {% endfor %}
         </div>
-    </div>
--->
-
-    
+    </section>
     
 <footer class="pie-pagina">
     <div class="g1">
