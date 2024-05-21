@@ -1,7 +1,10 @@
+import os
 from flask import Flask, render_template, request,redirect, url_for,flash,session
 from flask_mysqldb import MySQL
 import re
 from datetime import datetime
+from werkzeug.utils import secure_filename
+
 
 #conexion base de datos
 app = Flask(__name__)
@@ -9,6 +12,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'registrosCULTIVARED'
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
 mysql = MySQL(app)
 app.secret_key='mysecretkey'
 
@@ -186,21 +190,21 @@ def eliminar(id):
 #pagina de formulario para editar usuarios
 @app.route('/editar/<id>')
 def editar(id):
-        if 'logueado' in session and session['logueado']:
-            if 'rol' in session:
-                rol=session['rol']
-                if rol=='Admin':
-                    cur = mysql.connection.cursor()
-                    cur.execute("SELECT * FROM usuarios WHERE ID = %s", (id,))
-                    data = cur.fetchall()
-                    return render_template('/administrador/editarUsuario.html',user=data[0])
-                else:
-                    if rol=='Comprador':
-                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
-                        return alerta
-                    elif rol=='Vendedor':
-                        alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
-                        return alerta 
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Admin':
+                cur = mysql.connection.cursor()
+                cur.execute("SELECT * FROM usuarios WHERE ID = %s", (id,))
+                data = cur.fetchall()
+                return render_template('/administrador/editarUsuario.html',user=data[0])
+            else:
+                if rol=='Comprador':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
+                    return alerta
+                elif rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta 
         else:
             alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
             return alerta
@@ -404,20 +408,47 @@ def producto():
         return alerta
 
 #conexion bd con los productos
-@app.route('/producto', methods=['GET','POST'])
+import os
+
+@app.route('/producto', methods=['GET', 'POST'])
 def formProducto():
     if request.method == 'POST':
+        # Obtener datos del formulario
         idProducto = request.form['idProducto']
         nombreProducto = request.form['nombreProducto']
-        categoria= request.form['categoria']
+        categoria = request.form['categoria']
         cantidadProducto = request.form['unidades']
         precioProducto = request.form['precio']
-        idVendedor = session.get('email')  
+        idVendedor = session.get('email')
+
+        # Obtener la imagen del formulario
+        if 'imagen' in request.files:
+            imagen = request.files['imagen']
+            if imagen.filename != '':
+                filename = secure_filename(imagen.filename)
+                ruta_imagen = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                
+                # Crear el directorio si no existe
+                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+                imagen.save(ruta_imagen)  # Guardar la imagen en el sistema de archivos
+            else:
+                ruta_imagen = None
+        else:
+            ruta_imagen = None
+
+        # Guardar el producto en la base de datos junto con la ruta de la imagen
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO productos (idProducto, nombreProducto, categoria, cantidadProducto, precioProducto, idVendedor) VALUES (%s,%s,%s,%s,%s,%s)", (idProducto, nombreProducto, categoria,cantidadProducto, precioProducto, idVendedor))
-        mysql.connection.commit()     
+        cur.execute("INSERT INTO productos (idProducto, nombreProducto, categoria, cantidadProducto, precioProducto, idVendedor, imagen) VALUES (%s, %s, %s, %s, %s, %s, %s)", (idProducto, nombreProducto, categoria, cantidadProducto, precioProducto, idVendedor, ruta_imagen))
+        mysql.connection.commit()
+        cur.close()
+
         flash('Producto creado correctamente')
         return redirect(url_for('producto'))
+    else:
+        return render_template('formProducto.html')
+
+    
 @app.route("/Comprador")
 def comprador():
     if 'logueado' in session and session['logueado']:

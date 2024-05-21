@@ -12,7 +12,7 @@
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registra tus productos:</h3>
 
-            <form action="/producto" method="POST">
+            <form action="/producto" method="POST" enctype="multipart/form-data">
 
               <div class="row">
                 <div class="col-md-6 mb-4">
@@ -64,6 +64,11 @@
                   <label for="precio" class="form-label">Precio por libras(500gr)</label>
                   <input type="number" name="precio" class="form-control" title="precio" placeholder="Ej: 2000" required>
                 </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="imagen" class="form-label">Imagen:</label>
+                <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" required>
               </div>
 
               <div class="mt-4 pt-2">

@@ -17,6 +17,7 @@
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Cantidad</th>
                                 <th scope="col">Precio</th>
+                                <th scope="col">Imagen</th>
                                 <th scope="col">Operaciones</th>
                             </tr>
                         </thead>
@@ -28,6 +29,7 @@
                                     <td>{{ producto.2 }}</td>
                                     <td>{{ producto.3 }}</td>
                                     <td>{{ producto.4 }}</td>
+                                    <td>{{ producto.6 }}</td>
                                     <td>
                                         <a href="/editarProducto/{{ producto.0 }}" title="Editar" class="btn btn-primary btn-sm">Editar</a>
                                         <a href="/eliminarProducto/{{producto.0}}" title="Eliminar" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')">Eliminar</a>
