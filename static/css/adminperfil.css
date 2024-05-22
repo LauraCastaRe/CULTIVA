@@ -1,11 +1,108 @@
+/* adminperfil.css */
 
-    .profile-card {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+body {
+  background-color: #f9f9f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+.container-perfil  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* adminperfil.css */
+
+
+
+.container-perfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 350px;
+  text-align: center;
+}
+
+.profile-card .card-body {
+  padding: 20px;
+}
+
+.profile-card .profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-card h3, .profile-card h4 {
+  margin: 0;
+}
+
+.profile-card h5 {
+  color: #6c757d;
+}
+
+.profile-card .card-text {
+  margin-top: 10px;
+  color: #6c757d;
+}
+
+.profile-card .btn-primary {
+  background-color: #00b9f5;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-card .btn-primary:hover {
+  background-color: #009edb;
+}
+
+.profile-card .row {
+  margin-top: 20px;
+}
+
+.profile-card .col-sm-6 {
+  padding: 0 10px;
+}
+
+.profile-card p {
+  margin: 5px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-card strong {
+  font-weight: bold;
+}
+
+.info-box {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-align: center; /* Centrar el texto */
+}
+
+.info-box strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
