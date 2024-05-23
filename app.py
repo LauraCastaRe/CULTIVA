@@ -537,6 +537,29 @@ def categorias():
     else:
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
+    
+@app.route("/Legumbres")
+def categorias3():
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor() 
+                cur.execute("SELECT * FROM productos WHERE categoria = 'legumbres'")
+                data1 = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("comprador/compras.html",producto1=data1,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
 
 @app.route("/Vegetales")
 def categorias1():
@@ -547,9 +570,11 @@ def categorias1():
                 cur = mysql.connection.cursor() 
                 cur.execute("SELECT * FROM productos WHERE categoria = 'vegetales'")
                 data1 = cur.fetchall()
+                cur.execute("SELECT * FROM productos WHERE categoria = 'hortalizas'")
+                data2 = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cur.fetchone()
-                return render_template("comprador/compras.html",producto1=data1,user=user)
+                return render_template("comprador/compras.html",producto1=data1,producto2=data2,user=user)
             else:
                 if rol=='Vendedor':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
