@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request,redirect, url_for,flash,session
+from flask import Flask, render_template, request,redirect, send_from_directory, url_for,flash,session
 from flask_mysqldb import MySQL
 import re
 from datetime import datetime
@@ -269,6 +269,10 @@ def Productos():
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
          
+@app.route('/uploads/<filename>')
+def uploaded_file(uploads):
+    return send_from_directory(app.config['uploads'], uploads)
+
 #metodo para eliminar productos
 @app.route('/eliminarProducto/<int:id>')
 def eliminarProdu(id):
@@ -283,8 +287,10 @@ def eliminarProdu(id):
                 return redirect(url_for('Productos'))
             else:
                 if rol=='Comprador':
-                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Comprador"; </script>"""
-                    return alerta
+                    cur = mysql.connection.cursor()
+                    cur.execute("DELETE FROM carrito WHERE idP = %s", (id,))
+                    mysql.connection.commit()
+                    return redirect(url_for('ver_carrito'))
                 elif rol=='Vendedor':
                     cur = mysql.connection.cursor()
                     cur.execute("DELETE FROM productos WHERE idProducto = %s", (id,))
@@ -313,7 +319,9 @@ def editarProdu(id):
                     cur = mysql.connection.cursor()
                     cur.execute("SELECT * FROM productos WHERE idProducto = %s", (id,))
                     data = cur.fetchall()
-                    return render_template('/vendedor/editarProducto.html',produ=data[0])
+                    cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                    user = cur.fetchone()
+                    return render_template('/vendedor/editarProducto.html',produ=data[0],user=user)
     else:
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
@@ -327,6 +335,7 @@ def updateProdu(id):
         categoria = request.form['categoria']
         cantidadProducto = request.form['unidades']
         precioProducto = request.form['precio']
+
         cur = mysql.connection.cursor()
         cur.execute("""UPDATE productos SET idProducto=%s, nombreProducto=%s,
                        categoria=%s, cantidadProducto=%s, precioProducto=%s 
@@ -478,13 +487,12 @@ def compras():
             rol=session['rol']
             if rol=='Comprador':
                 cur = mysql.connection.cursor() 
-                cur.execute('SELECT * FROM productos WHERE idProducto IN (1, 1234)')
-                data1 = cur.fetchall()
+            
                 cur.execute('SELECT * FROM productos')
                 data2 = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cur.fetchone()
-                return render_template("comprador/compras.html",producto1=data1,producto2=data2,user=user)
+                return render_template("comprador/compras.html",producto2=data2,user=user)
             else:
                 if rol=='Vendedor':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
@@ -496,18 +504,63 @@ def compras():
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
 
-@app.route('/agregar_al_carrito', methods=['POST'])
+@app.route('/agregar_al_carrito', methods=['GET','POST'])
 def agregar_al_carrito():
-        data = request.form
-        nombre_producto = data['nombre_producto']
-        precio_producto = data['precio_producto']
-        cantidad = int(data['cantidad'])
-
+        idP=request.form['idP']
+        nombre_producto = request.form['nombre_producto']
+        precio_producto = request.form['precio']
+        cantidad = int(request.form['cantidad'])
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO carrito (nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s)", (nombre_producto, precio_producto, cantidad))
+        cursor.execute("INSERT INTO carrito (idP,nombre_producto, precio_producto, cantidad) VALUES (%s, %s, %s,%s)", (idP,nombre_producto, precio_producto, cantidad))
         mysql.connection.commit()
         alerta = """<script> alert("Producto agregado al carrito"); window.location.href = "/Tienda"; </script>"""
         return alerta
+@app.route("/Frutas")
+def categorias():
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor() 
+                cur.execute("SELECT * FROM productos WHERE categoria = 'frutas'")
+                data1 = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("comprador/compras.html",producto1=data1,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+
+@app.route("/Vegetales")
+def categorias1():
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor() 
+                cur.execute("SELECT * FROM productos WHERE categoria = 'vegetales'")
+                data1 = cur.fetchall()
+                cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                user = cur.fetchone()
+                return render_template("comprador/compras.html",producto1=data1,user=user)
+            else:
+                if rol=='Vendedor':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                    return alerta
+                elif rol=='Admin':
+                    alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                    return alerta 
+    else:
+        alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+        return alerta
+
 
 @app.route('/carrito')
 def ver_carrito():
@@ -520,7 +573,7 @@ def ver_carrito():
                 productos_carrito = cursor.fetchall()
                 cursor.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cursor.fetchone()
-                total = sum([producto[1] * producto[2] for producto in productos_carrito])  # Calcula el total
+                total = sum([producto[2] * producto[3] for producto in productos_carrito])  # Calcula el total
                 return render_template('comprador/carrito.html', productos_carrito=productos_carrito, total=total,user=user)
             else:
                 if rol=='Vendedor':

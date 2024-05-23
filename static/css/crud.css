@@ -37,3 +37,20 @@ a:hover {
     text-decoration: underline;
     color: red;
 }
+
+/* Estilos para el enlace "Atrás" */
+.btn-secondary {
+    background-color: #6c757d; /* Color de fondo */
+    border-color: #6c757d; /* Color del borde */
+    color: #fff; /* Color del texto */
+    text-decoration: none; /* Quitar subrayado */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Borde redondeado */
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Color de fondo al pasar el mouse */
+    border-color: #5a6268; /* Color del borde al pasar el mouse */
+    color: #fff; /* Color del texto al pasar el mouse */
+  }
+  

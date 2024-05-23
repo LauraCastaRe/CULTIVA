@@ -16,19 +16,18 @@
         <div class="container-categories">
             <div class="card-category category-moca">
                 <p>Vegetales</p>
-                <span>Ver más</span>
+                <a href="Vegetales"><span>Ver más</span></a>
             </div>
             <div class="card-category category-expreso">
                 <p>Frutas</p>
-                <span>Ver más</span>
+                <a href="Frutas"><span>Ver más</span></a>
             </div>
             <div class="card-category category-capuchino">
                 <p>Legumbres</p>
-                <span>Ver más</span>
+                <a href="Legumbres"><span>Ver más</span></a>
             </div>
         </div>
     </section>
-
     <section class="container top-products">
         <h1 class="heading-1">Mejores Productos</h1>
 
@@ -37,7 +36,7 @@
             {% for producto in producto1 %}
             <div class="card-product">
                 <div class="container-img">
-                    <img src="/static/uploads/papa.jpeg" alt="{{ producto.1 }}"/>
+                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
                     <div class="button-group">
                         <span>
                             <i class="fa-regular fa-eye"></i>
@@ -62,7 +61,38 @@
 
          
     </section>
+    <section class="container specials">
+        <h1 class="heading-1">Todos nuestros productos</h1>
+        <div class="container-products">
+            <!-- Producto 1 -->
+            {% for producto in producto2 %}
+            <div class="card-product">
+                <div class="container-img">
+                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">
+                    <div class="button-group">
+                        <span>
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
 
+                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p class="precio"><input type="text" name="precio" value="{{ producto.4 }}" readonly></p>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                    </div>
+                    <h5><input type="hidden" name="idP" value="{{producto.0}}"></h5>
+                    <button type="submit" class="add-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    
     <section class="gallery">
         <img
             src="/static/img/cultivo1.png"
@@ -87,35 +117,9 @@
         />
     </section>
 
-    <section class="container specials">
-        <h1 class="heading-1">Todos nuestros productos</h1>
-        <div class="container-products">
-            <!-- Producto 1 -->
-            {% for producto in producto2 %}
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="/static/img/tomate.png" alt="{{ producto.1 }}"/>
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
-                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
-                    <p class="precio"><input type="text" name="precio_producto" value="${{ producto.4 }}" readonly></p>
-                    <div class="form-group">
-                        <label for="cantidad">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
-                    </div>
-                    <button type="submit" class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+    
+
+    
     
 <footer class="pie-pagina">
     <div class="g1">
