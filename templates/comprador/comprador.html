@@ -6,23 +6,23 @@
 <div class="container mt-5">
   <div class="profile-card card">
     <div class="card-body text-center">
-      <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture mb-3">
-      <h3 class="card-title">{{ user[2] }}</h3>
-      <h4 class="card-title">{{ user[1] }}</h4>
-      <h5 class="card-subtitle mb-2 text-muted">{{ user[0] }}</h5>
-      <p class="card-text">Rol: {{ user[8] }}</p>
+      <img title="Foto de perfil" src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture mb-3">
+      <h3 title="{{user[2]}}" class="card-title">{{ user[2] }}</h3>
+      <h4 title="{{user[1]}}" class="card-title">{{ user[1] }}</h4>
+      <h5 title="{{user[0]}}" class="card-subtitle mb-2 text-muted">{{ user[0] }}</h5>
+      
       <div class="row">
         <div class="col-sm-6">
-          <p><strong>Genero:</strong> {{ user[3] }}</p>
-          <p><strong>Email:</strong> {{ user[5] }}</p>
+          <p title="Genero: {{user[3]}}"><strong>Genero:</strong> {{ user[3] }}</p>
+          <p title="Email: {{user[5]}}"><strong>Email:</strong> {{ user[5] }}</p>
         </div>
         <div class="col-sm-6">
-          <p><strong>Teléfono:</strong> {{ user[4] }}</p>
-          <p><strong>Contraseña:</strong> {{ user[6] }}</p>
+          <p title="Teléfono: {{user[4]}}"><strong>Teléfono:</strong> {{ user[4] }}</p>
+          <p title="Rol: {{user[8]}}"><strong>Rol:</strong> {{ user[8] }}</p>
         </div>
       </div>
       <div class="mt-3">
-        <a href="/editar/{{ user[0] }}" class="btn btn-danger">Editar</a>
+        <a title="Boton para editar" href="/editar/{{ user[0] }}" class="btn btn-danger">Editar</a>
       </div>
     </div>
   </div>

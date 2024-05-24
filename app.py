@@ -490,9 +490,11 @@ def compras():
             
                 cur.execute('SELECT * FROM productos')
                 data2 = cur.fetchall()
+                cur.execute('SELECT * FROM `productos` WHERE idProducto = 1')
+                data = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
-                user = cur.fetchone()
-                return render_template("comprador/compras.html",producto2=data2,user=user)
+                user = cur.fetchall()
+                return render_template("comprador/compras.html", producto1=data, producto2=data2,user=user)
             else:
                 if rol=='Vendedor':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
@@ -503,6 +505,34 @@ def compras():
     else:
         alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
         return alerta
+    
+@app.route('/buscar_producto', methods=['GET','POST'])
+def BuscarProducto():
+    
+    if 'logueado' in session and session['logueado']:
+        if 'rol' in session:
+            rol=session['rol']
+            if rol=='Comprador':
+                cur = mysql.connection.cursor() 
+                if request.method == "POST":
+                    search = request.form['buscar']
+                    cur = mysql.connection.cursor() 
+                    cur.execute("SELECT * FROM productos WHERE nombreproducto= '%s' ORDER BY nombreproducto DESC" % (search,))
+                    busqueda = cur.fetchall()
+                    cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
+                    user = cur.fetchone()
+                    return render_template("comprador/resultado_busqueda.html",miData=busqueda, busqueda=search, user=user)
+            if rol=='Vendedor':
+                alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""
+                return alerta
+            elif rol=='Admin':
+                alerta = """<script> alert("No tienes permisos."); window.location.href = "/Administrador"; </script>"""
+                return alerta 
+            else:
+                alerta = """<script> alert("Por favor, primero inicie sesión."); window.location.href = "/login"; </script> """
+                return alerta
+        
+    
 
 @app.route('/agregar_al_carrito', methods=['GET','POST'])
 def agregar_al_carrito():
@@ -515,6 +545,7 @@ def agregar_al_carrito():
         mysql.connection.commit()
         alerta = """<script> alert("Producto agregado al carrito"); window.location.href = "/Tienda"; </script>"""
         return alerta
+    
 @app.route("/Frutas")
 def categorias():
     if 'logueado' in session and session['logueado']:
@@ -523,10 +554,10 @@ def categorias():
             if rol=='Comprador':
                 cur = mysql.connection.cursor() 
                 cur.execute("SELECT * FROM productos WHERE categoria = 'frutas'")
-                data1 = cur.fetchall()
+                categoria1 = cur.fetchall()
                 cur.execute('SELECT * FROM usuarios WHERE email = %s', (session['email'],))
                 user = cur.fetchone()
-                return render_template("comprador/compras.html",producto1=data1,user=user)
+                return render_template("comprador/compras.html",producto1=categoria1,user=user)
             else:
                 if rol=='Vendedor':
                     alerta = """<script> alert("No tienes permisos."); window.location.href = "/Vendedor"; </script>"""

@@ -1,0 +1,63 @@
+{% extends 'comprador/baseComprador.html' %}
+
+{% block body %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/css/comprador/compras.css">
+    <title>CULTIVARED</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="static/img/logoo.png">
+
+
+    <section class="container top-products">
+        <h1 class="heading-1">Resultados de la busqueda</h1>
+        <div class="container-products">
+            <!-- Productos de producto1 -->
+            
+            
+            <!-- Productos de producto2 -->
+            {% if producto in miData %}
+            <div class="card-product">
+                <div class="container-img">
+                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
+                    <div class="button-group">
+                        <span>
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
+                    
+                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p class="precio"><input type="text" name="precio" value="{{ producto.4 }}" readonly></p>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                    </div>
+                    <h5><input type="hidden" name="idP" value="{{producto.0}}"></h5>
+                    <button type="submit" class="add-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </button>
+                </form>
+            </div>
+            {% else %}
+                <p>No hay resultados para la busqueda:
+                    <strong class="busq colorCrimson"> {{ busqueda }}</strong>
+                </p>
+            {% endif %}
+
+            
+        </div>
+    </section>
+    
+
+    <footer class="pie-pagina">
+        <div class="g1">
+            <small>&copy; 2024 <b>LA</b> - Todos los derechos reservados. </small>
+        </div>
+    </footer>
+{% endblock %}

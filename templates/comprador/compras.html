@@ -13,48 +13,90 @@
     <link rel="icon" href="static/img/logoo.png">
 
     <section class="container top-categories">
-        <h1 class="heading-1">Mejores Categorías</h1>
+        <h1 title="Mejores categorias" class="heading-1">Mejores Categorías</h1>
         <div class="container-categories">
             <div class="card-category category-moca">
-                <p>Vegetales</p>
-                <a href="Vegetales"><span>Ver más</span></a>
+                <p title="Vegetales">Vegetales</p>
+                <a href="Vegetales"><span title="Ver más">Ver más</span></a>
             </div>
             <div class="card-category category-expreso">
-                <p>Frutas</p>
-                <a href="Frutas"><span>Ver más</span></a>
+                <p title="Frutas">Frutas</p>
+                <a href="Frutas"><span title="Ver más">Ver más</span></a>
             </div>
             <div class="card-category category-capuchino">
-                <p>Legumbres</p>
-                <a href="Legumbres"><span>Ver más</span></a>
+                <p title="Legumbres">Legumbres</p>
+                <a href="Legumbres"><span title="Ver más">Ver más</span></a>
             </div>
         </div>
     </section>
 
+    <section class="container top-products">
+        <h1 title="Mejores productos" class="heading-1">Mejores Productos</h1>
+        <div class="container-products">
+            <!-- Productos de producto1 -->
+            
+            
+            <!-- Productos de producto2 -->
+            {% for producto in producto1 %}
+            <div title="Carta del producto" class="card-product">
+                <div title="imagen del producto {{ producto.1 }}" class="container-img">
+                    <img  src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
+                    <div title="Ver" class="button-group">
+                        <span>
+                            <i class="fa-regular fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
+                    
+                    <h3><input title="{{ producto.1 }}" type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p title="{{ producto.4 }}" class="precio"><input type="text" name="precio" value="{{ producto.4 }}" readonly></p>
+                    <div class="form-group">
+                        <label title="Cantidad" for="cantidad">Cantidad</label>
+                        <input title="Campo de la cantidad" type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                    </div>
+                    <h5><input type="hidden" name="idP" value="{{producto.0}}"></h5>
+                    <button title="Boton añadir al carrito" type="submit" class="add-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+     
+    <section class="gallery">
+        <img title="Imagen ilustrativa" src="/static/img/cultivo1.png" alt="Gallery Img1" class="gallery-img-1" />
+        <img title="Imagen ilustrativa" src="/static/img/cultivo2.png" alt="Gallery Img2" class="gallery-img-2" />
+        <img title="Imagen ilustrativa" src="/static/img/cultivo5.png" alt="Gallery Img3" class="gallery-img-3" />
+        <img title="Imagen ilustrativa" src="/static/img/cultivo4.png" alt="Gallery Img4" class="gallery-img-4" />
+        <img title="Imagen ilustrativa" src="/static/img/cultivo3.png" alt="Gallery Img5" class="gallery-img-5" />
+    </section>
     
     <section class="container specials">
-        <h1 class="heading-1">Todos nuestros productos</h1>
+        <h1 title="Todos nuestros productos" class="heading-1">Todos nuestros productos</h1>
         <div class="container-products">
             <!-- Productos de producto2 (suponiendo que sea una lista completa) -->
             {% for producto in producto2 %}
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">
-                    <div class="button-group">
+            <div title="Carta del producto" class="card-product">
+                <div title="imagen del producto {{ producto.1 }}" class="container-img">
+                    <img  src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
+                    <div title="Ver" class="button-group">
                         <span>
                             <i class="fa-regular fa-eye"></i>
                         </span>
                     </div>
                 </div>
                 <form class="content-card-product" action="/agregar_al_carrito" method="POST">
-
-                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
-                    <p class="precio"><input type="text" name="precio" value="{{ producto.4 }}" readonly></p>
+                    
+                    <h3><input title="{{ producto.1 }}" type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
+                    <p title="{{ producto.4 }}" class="precio"><input type="text" name="precio" value="{{ producto.4 }}" readonly></p>
                     <div class="form-group">
-                        <label for="cantidad">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
+                        <label title="Cantidad" for="cantidad">Cantidad</label>
+                        <input title="Campo de la cantidad" type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
                     </div>
                     <h5><input type="hidden" name="idP" value="{{producto.0}}"></h5>
-                    <button type="submit" class="add-cart">
+                    <button title="Boton ñadir al carrito" type="submit" class="add-cart">
                         <i class="fa-solid fa-basket-shopping"></i>
                     </button>
                 </form>
@@ -63,68 +105,6 @@
         </div>
     </section>
     
-    <section class="gallery">
-        <img src="/static/img/cultivo1.png" alt="Gallery Img1" class="gallery-img-1" />
-        <img src="/static/img/cultivo2.png" alt="Gallery Img2" class="gallery-img-2" />
-        <img src="/static/img/cultivo5.png" alt="Gallery Img3" class="gallery-img-3" />
-        <img src="/static/img/cultivo4.png" alt="Gallery Img4" class="gallery-img-4" />
-        <img src="/static/img/cultivo3.png" alt="Gallery Img5" class="gallery-img-5" />
-    </section>
-    <section class="container top-products">
-        <h1 class="heading-1">Mejores Productos</h1>
-        <div class="container-products">
-            <!-- Productos de producto1 -->
-            {% for producto in producto1 %}
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
-                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
-                    <p class="precio"><input type="text" name="precio_producto" value="${{ producto.4 }}" readonly></p>
-                    <div class="form-group">
-                        <label for="cantidad">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
-                    </div>
-                    <button type="submit" class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </button>
-                </form>
-            </div>
-            {% endfor %}
-            
-            <!-- Productos de producto2 -->
-            {% for producto in producto2 %}
-            <div class="card-product">
-                <div class="container-img">
-                    <img src="{{ url_for('uploaded_file', filename=producto.5) }}" alt="{{ producto.1 }}">  
-                    <div class="button-group">
-                        <span>
-                            <i class="fa-regular fa-eye"></i>
-                        </span>
-                    </div>
-                </div>
-                <form class="content-card-product" action="/agregar_al_carrito" method="POST">
-                    <h3><input type="text" name="nombre_producto" value="{{ producto.1 }}" readonly></h3>
-                    <p class="precio"><input type="text" name="precio_producto" value="${{ producto.4 }}" readonly></p>
-                    <div class="form-group">
-                        <label for="cantidad">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" min="1">
-                    </div>
-                    <button type="submit" class="add-cart">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
     <footer class="pie-pagina">
         <div class="g1">
             <small>&copy; 2024 <b>LA</b> - Todos los derechos reservados. </small>

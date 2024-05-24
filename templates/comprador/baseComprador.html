@@ -20,11 +20,11 @@
         <div class="container">
             <a href="/Tienda" class="logo" title="CultivaRed"><span class="li">Cultiva</span>Red</a>
             <ul class="nav-links">
-                <form class="search-form">
-                    <button class="btn-search">
+                <form class="search-form" title="Campo para busqueda de productos" method="POST" action="{{ url_for('BuscarProducto') }}" autocomplete="off">
+                    <button title="Boton buscar" type="submit" class="btn-search">
                         <img src="/static/img/buscar.svg">
                     </button>
-                    <input type="search" placeholder="Buscar">  
+                    <input type="search" name="buscar" placeholder="Buscar producto">  
                 </form>
                 <li><a href="/Tienda" title="Productos">Productos</a></li>
                 <li><a href="/carrito" title="Carrito">Carrito</a></li>

@@ -5,31 +5,31 @@
     <link rel="stylesheet" href="static/css/comprador/carrito.css">
     <div class="container-carrito">
         <div class="header">
-            <a href="/Tienda" class="btn btn-secondary">Seguir comprando</a>
+            <a title="Boton seguir comprando" href="/Tienda" class="btn btn-secondary">Seguir comprando</a>
         </div>
-        <h1 class="my-4">Revisa tu compra</h1>
+        <h1 title="Revisa tu compra" class="my-4">Revisa tu compra</h1>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Codigo</th>
-                    <th>Artículo</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th>Acciones</th>
+                    <th title="Codigo" >Codigo</th>
+                    <th title="Articulos" >Artículo</th>
+                    <th title="Precio">Precio</th>
+                    <th title="Cantidad">Cantidad</th>
+                    <th title="Subtotal">Subtotal</th>
+                    <th title="Acciones">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for producto in productos_carrito %}
                 <tr>
-                    <td>{{producto.0}}</td>
-                    <td>{{ producto.1 }}</td>
-                    <td>${{ producto.2 }}</td>
-                    <td>{{ producto[3] }}</td>
-                    <td>${{ producto.2* producto.3 }}</td>
+                    <td title="{{producto.0}}">{{producto.0}}</td>
+                    <td title="{{producto.1}}">{{ producto.1 }}</td>
+                    <td title="{{producto.2}}">${{ producto.2 }}</td>
+                    <td title="{{producto[3]}}">{{ producto[3] }}</td>
+                    <td title="{{producto.2* producto.3}}">${{ producto.2* producto.3 }}</td>
                     <td>
     
-                            <a href="/eliminarProducto/{{ producto.0 }}" title="Eliminar" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')" style="font-size: 0.8rem;">Eliminar</a>
+                            <a href="/eliminarProducto/{{ producto.0 }}" title="Boton eliminar" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')" style="font-size: 0.8rem;">Eliminar</a>
                    
                     </td>
                     
@@ -37,12 +37,11 @@
                 {% endfor %}
             </tbody>
         </table>
-        <button class="btn btn-warning">Actualizar carrito</button>
+        <button title="Boton actualizar carrito" class="btn btn-warning">Actualizar carrito</button>
         <div class="total-container">
-            <h3>Total: ${{ total }}</h3>
+            <h3 title="Total: {{total}}">Total: ${{ total }}</h3>
             <form action="/pagar" method="POST">
-                <button type="submit" class="btn btn-success">Finalizar tu compra</button>
-
+                <button title="Boton finalizar compra" type="submit" class="btn btn-success">Finalizar tu compra</button>
             </form>
         </div>
     </div>
